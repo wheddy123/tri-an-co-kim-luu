@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Heart, 
@@ -22,13 +22,14 @@ import {
   Maximize2, 
   X, 
   Camera,
-  MapPin,
-  Calendar,
-  Sparkle
+  Star,
+  Flag,
+  Sun,
+  GraduationCap
 } from 'lucide-react';
 
 /* =========================================================================
-   PHASE 1: CẤU TRÚC DỮ LIỆU ĐẦY ĐỦ (DATA STRUCTURE - 7 BỨC ẢNH CỦA CÔ LƯU)
+   CẤU TRÚC DỮ LIỆU & BỘ ẢNH CHÂN THỰC CỦA CÔ LƯƠNG THỊ KIM LƯU
    ========================================================================= */
 
 export const PHOTOS = {
@@ -50,18 +51,18 @@ export const TRIBUTE_DATA = {
     subject: 'Giáo dục Kinh tế và Pháp luật',
     school: 'Trường THPT Xuân Đỉnh',
     classCohort: 'Tập thể Lớp 12A15 (Niên khóa K65)',
-    timeline: 'Hơn 1000 ngày gắn bó (2022 - 2025)',
+    timeline: 'Hành trình hơn 1000 ngày gắn bó (2022 - 2025)',
   },
   song: {
     title: 'Bài ca người giáo viên nhân dân',
     composer: 'Nhạc sĩ Hoàng Vân',
   },
   hero: {
-    badge: 'TRI ÂN NGƯỜI LÁI ĐÒ A15K65 • THPT XUÂN ĐỈNH',
+    badge: '★ TRƯỜNG THPT XUÂN ĐỈNH • NIÊN KHÓA K65 ★',
     title: 'Hơn 1000 Ngày Trọn Vẹn Cùng Cô Lương Thị Kim Lưu',
-    subtitle: 'Nơi tri thức pháp luật song hành cùng lòng bao dung và tình thương thầm lặng của người cô kính yêu.',
+    subBadge: 'VINH DANH & TRI ÂN NGƯỜI LÁI ĐÒ KÍNH YÊU CỦA TẬP THỂ 12A15',
+    subtitle: 'Nơi tri thức pháp luật song hành cùng lòng bao dung nhẫn nại và tình thương thầm lặng của người cô kính yêu.',
   },
-  // Mỗi chương câu chuyện gắn liền với 1 bức ảnh thực tế của Cô
   stories: [
     {
       id: 'chapter-1',
@@ -70,9 +71,9 @@ export const TRIBUTE_DATA = {
       subtitle: 'Kiến thức vững vàng đằng sau vẻ ngoài ít bộc lộ',
       icon: BookOpen,
       image: PHOTOS.teaching10A15,
-      imageCaption: 'Cô trực tiếp đứng lớp 10A15-K65 trước bảng đen kỷ niệm 30/4 - 1/5',
+      imageCaption: 'Cô trực tiếp đứng lớp 10A15 trước bảng đen kỷ niệm "Đất Nước Trọn Niềm Vui 30/4 - 1/5"',
       imageTag: 'Chuyên Môn Vững Vàng',
-      content: `Cô là một người giáo viên có tâm hồn hướng thiện thuần khiết. Có thể cô không phải là người khéo léo dùng lời hoa mỹ hay dễ dàng bộc lộ cảm xúc ra bên ngoài, nhưng trên bục giảng, cô luôn hiện diện với nền tảng kiến thức chuyên môn cực kỳ vững vàng. Từng giờ dạy Giáo dục Kinh tế và Pháp luật luôn được cô chuẩn bị chu toàn, nghiêm cẩn và đầy trách nhiệm, dạy cho chúng em không chỉ kiến thức để làm bài thi mà là bản lĩnh làm người, sự tôn trọng pháp luật và chuẩn mực sống giữa cuộc đời.`,
+      content: `Cô là người phụ nữ có tâm hồn hướng thiện thuần khiết. Có thể cô không phải là người khéo léo dùng lời hoa mỹ hay dễ dàng bộc lộ cảm xúc ra bên ngoài, nhưng trên bục giảng, cô luôn hiện diện với nền tảng kiến thức chuyên môn cực kỳ vững vàng. Từng giờ dạy Giáo dục Kinh tế và Pháp luật luôn được cô chuẩn bị chu toàn, nghiêm cẩn và đầy trách nhiệm, dạy cho chúng em không chỉ kiến thức thi cử mà là bản lĩnh làm người, sự tôn trọng pháp luật và chuẩn mực sống giữa cuộc đời.`,
       highlight: 'Sự nghiêm khắc là trách nhiệm, còn tri thức vững chãi là món quà lớn nhất cô trao gửi cho chúng em.',
     },
     {
@@ -82,10 +83,10 @@ export const TRIBUTE_DATA = {
       subtitle: 'Sự kiên nhẫn phi thường trước 9 mảnh ghép đặc biệt',
       icon: ShieldCheck,
       image: PHOTOS.classroomB105,
-      imageCaption: 'Phòng học B105 - Nơi cô bắt đầu hành trình đồng hành cùng 10A15',
-      imageTag: 'Vượt Qua Gian Khó',
+      imageCaption: 'Cửa phòng học B105 - Nơi cô đón nhận và uốn nắn những học sinh đặc biệt đầu tiên',
+      imageTag: 'Bao Dung & Nhẫn Nại',
       content: `Hơn 1000 ngày cùng nhau là ngần ấy thời gian tập thể A15 thấu hiểu những áp lực vô hình đè nặng lên vai cô. Đặc biệt trong suốt hai năm đầu tiên đầy sóng gió, khi lớp đón nhận tới 9 bạn học sinh đặc biệt với những hoàn cảnh và thử thách rất riêng (từ nghịch ngợm cá biệt cho đến những bạn mang khiếm khuyết, cần hỗ trợ hòa nhập, chậm phát triển...). Đã có những mệt mỏi, trăn trở, nhưng cô vẫn luôn bao dung, nhẫn nại và hết lòng vì công việc, không bao giờ bỏ cuộc và chưa từng buông tay bất kỳ học trò nào.`,
-      highlight: '9 bạn học sinh đặc biệt là 9 thử thách lớn — và cô đã đón nhận bằng trọn vẹn đức hy sinh của người mẹ.',
+      highlight: '9 bạn học sinh đặc biệt là 9 thử thách lớn — và cô đã đón nhận bằng cả tấm lòng người mẹ.',
     },
     {
       id: 'chapter-3',
@@ -100,62 +101,61 @@ export const TRIBUTE_DATA = {
       highlight: 'Chúng em đã lớn khôn từ chính sự kiên định và tấm lòng bao dung không lời ấy.',
     },
   ],
-  // Bộ sưu tập toàn diện 7 khoảnh khắc của Cô
   gallery: [
     {
       id: 'gal-banner',
       src: PHOTOS.banner,
       title: 'Áp Phích Vinh Danh & Tri Ân',
       subtitle: 'THPT Xuân Đỉnh • GVCN A15K65',
-      category: 'Vinh Danh',
+      tag: 'Vinh Danh Trang Trọng',
       description: 'Bức ảnh vinh danh chính thức gửi tặng người cô kính yêu Lương Thị Kim Lưu trong tà áo dài trắng tinh khôi.',
     },
     {
       id: 'gal-portrait',
       src: PHOTOS.portraitPink,
       title: 'Nụ Cười Rạng Rỡ & Lời Chào Nồng Hậu',
-      subtitle: 'Lễ bế giảng • Áo dài hồng & Chuỗi ngọc trai',
-      category: 'Khoảnh Khắc Đẹp',
-      description: 'Nụ cười đôn hậu và cánh tay vẫy chào học trò đầy trìu mến giữa ngày hội trường thân thương.',
+      subtitle: 'Lễ bế giảng trường học • Áo dài hồng thắm',
+      tag: 'Nụ Cười Tri Ân',
+      description: 'Nụ cười tươi tắn và cánh tay vẫy chào học trò đầy trìu mến giữa ngày hội trường THPT Xuân Đỉnh.',
     },
     {
       id: 'gal-teaching',
       src: PHOTOS.teaching10A15,
       title: 'Cô Đứng Lớp 10A15 K65',
       subtitle: 'Bục giảng B105 • Đất Nước Trọn Niềm Vui',
-      category: 'Giảng Dạy',
+      tag: 'Bục Giảng Thân Thương',
       description: 'Hình ảnh cô Lưu nhiệt huyết trên bục giảng, cầm micro truyền lửa tri thức pháp luật cho lớp 10A15.',
     },
     {
       id: 'gal-b105',
       src: PHOTOS.classroomB105,
       title: 'Trước Cửa Phòng Học B105',
-      subtitle: 'Lớp 10A15 • THPT Xuân Đỉnh',
-      category: 'Kỷ Niệm Lớp',
+      subtitle: 'Lớp 10A15 • Kỷ niệm ngày đầu',
+      tag: 'Mái Trường Xưa',
       description: 'Cô đứng bên giàn hoa giấy và cờ đỏ sao vàng tại cửa phòng học B105 — nơi khởi đầu hành trình 1000 ngày.',
     },
     {
       id: 'gal-yellow',
       src: PHOTOS.yellowDress,
       title: 'Việt Nam Trong Tôi — Tự Hào 30/4',
-      subtitle: 'Áo dài vàng hoa cúc • Nụ cười rạng ngời',
-      category: 'Năng Lượng Tích Cực',
-      description: 'Vẻ đẹp dịu dàng, quý phái của cô giáo bộ môn Kinh tế & Pháp luật trong dịp kỷ niệm đất nước.',
+      subtitle: 'Áo dài vàng hoa cúc rạng rỡ',
+      tag: 'Tự Hào Non Sông',
+      description: 'Vẻ đẹp dịu dàng, quý phái của cô giáo bộ môn Kinh tế & Pháp luật trong ngày hội thống nhất đất nước.',
     },
     {
       id: 'gal-red',
       src: PHOTOS.redDressNation,
       title: 'Việt Nam Mãi Mãi Tổ Quốc Của Tôi',
       subtitle: 'Quảng trường Ba Đình • Áo dài đỏ sao vàng',
-      category: 'Tự Hào Dân Tộc',
-      description: 'Cô Lưu trang nghiêm và rực rỡ trước Lăng Chủ tịch Hồ Chí Minh trong ngày Tết Độc Lập 2/9.',
+      tag: 'Ngày Lễ Độc Lập',
+      description: 'Cô Lưu rực rỡ và trang nghiêm trước Lăng Chủ tịch Hồ Chí Minh trong ngày Tết Độc Lập 2/9.',
     },
     {
       id: 'gal-outdoor',
       src: PHOTOS.outdoorSmile,
       title: 'Khoảnh Khắc Đời Thường Trẻ Trung',
-      subtitle: 'Dã ngoại hòa mình cùng thiên nhiên',
-      category: 'Đời Thường',
+      subtitle: 'Dã ngoại hòa mình cùng thiên nhiên xanh',
+      tag: 'Gần Gũi Đời Thường',
       description: 'Nụ cười tươi tắn, phong thái trẻ trung, gần gũi và tràn đầy sức sống của cô ngoài bục giảng.',
     },
   ],
@@ -168,26 +168,69 @@ export const TRIBUTE_DATA = {
   },
 };
 
-const smoothEasing = [0.16, 1, 0.3, 1] as const;
+// Dải cờ đuôi nheo thập niên cũ: Đỏ, Vàng, Xanh lá, Xanh dương, Cam
+const BUNTING_FLAGS = [
+  '#dc2626', '#eab308', '#059669', '#2563eb', '#ea580c', 
+  '#dc2626', '#eab308', '#059669', '#2563eb', '#ea580c',
+  '#dc2626', '#eab308', '#059669', '#2563eb', '#ea580c',
+  '#dc2626', '#eab308', '#059669', '#2563eb', '#ea580c',
+  '#dc2626', '#eab308', '#059669', '#2563eb', '#ea580c',
+];
 
 export default function TributeLandingPage() {
   const [customWish, setCustomWish] = useState(TRIBUTE_DATA.closing.defaultWish);
   const [isCopied, setIsCopied] = useState(false);
   const [isEditingWish, setIsEditingWish] = useState(false);
 
-  // Nhạc nền
+  // Audio Ref
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
-  // Spotlight ảnh cô ở Hero (cho phép đổi ảnh xem ngay tại Hero)
+  // Spotlight ảnh cô ở Hero
   const [activeHeroPhoto, setActiveHeroPhoto] = useState<string>(PHOTOS.banner);
-
-  // Filter bộ sưu tập ảnh
-  const [galleryFilter, setGalleryFilter] = useState<string>('Tất Cả');
 
   // Modal phóng to ảnh 100% không cắt xén
   const [modalImage, setModalImage] = useState<{ src: string; title: string; subtitle: string; description?: string } | null>(null);
+
+  /* =========================================================================
+     TỰ ĐỘNG PHÁT NHẠC NGAY KHI VÀO TRANG (AUTOPLAY + UNLOCK ON FIRST INTERACTION)
+     ========================================================================= */
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.85;
+
+    // 1. Thử gọi play() ngay lập tức khi vào trang
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          // 2. Nếu trình duyệt chặn raw autoplay, tự mở ngay khi người dùng chạm, click hoặc cuộn trang
+          const unlockAudio = () => {
+            if (audioRef.current) {
+              audioRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch((e) => console.log('Unlock audio prevented:', e));
+            }
+            window.removeEventListener('click', unlockAudio);
+            window.removeEventListener('touchstart', unlockAudio);
+            window.removeEventListener('scroll', unlockAudio);
+            window.removeEventListener('pointerdown', unlockAudio);
+            window.removeEventListener('keydown', unlockAudio);
+          };
+
+          window.addEventListener('click', unlockAudio, { once: true });
+          window.addEventListener('touchstart', unlockAudio, { once: true });
+          window.addEventListener('scroll', unlockAudio, { once: true });
+          window.addEventListener('pointerdown', unlockAudio, { once: true });
+          window.addEventListener('keydown', unlockAudio, { once: true });
+        });
+    }
+  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -197,7 +240,7 @@ export default function TributeLandingPage() {
     } else {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
-        .catch((e) => console.log('Audio playback prevented:', e));
+        .catch((e) => console.log('Manual play prevented:', e));
     }
   };
 
@@ -218,19 +261,10 @@ export default function TributeLandingPage() {
     document.getElementById('scrollytelling')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToGallery = () => {
-    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const categories = ['Tất Cả', 'Vinh Danh', 'Giảng Dạy', 'Khoảnh Khắc Đẹp', 'Đời Thường'];
-  const filteredGallery = galleryFilter === 'Tất Cả' 
-    ? TRIBUTE_DATA.gallery 
-    : TRIBUTE_DATA.gallery.filter(item => item.category === galleryFilter || (galleryFilter === 'Khoảnh Khắc Đẹp' && (item.category === 'Năng Lượng Tích Cực' || item.category === 'Tự Hào Dân Tộc')));
-
   return (
-    <main className="min-h-screen bg-[#0a0708] text-[#f5f5f4] selection:bg-amber-500/30 selection:text-amber-200 overflow-x-clip">
+    <main className="min-h-screen bg-[#fffdf8] text-[#1c1917] selection:bg-red-600 selection:text-yellow-200 overflow-x-clip">
       
-      {/* Audio element phát Bài Ca Người Giáo Viên Nhân Dân */}
+      {/* Audio element ẩn */}
       <audio
         ref={audioRef}
         src={AUDIO_TRACK}
@@ -240,220 +274,199 @@ export default function TributeLandingPage() {
         onPause={() => setIsPlaying(false)}
       />
 
-      {/* Thanh điều hướng cố định */}
-      <nav className="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-black/60 border-b border-amber-900/20 px-4 sm:px-8 py-3.5 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 flex items-center justify-center text-black font-bold text-xs shadow-md shadow-amber-500/20">
-            A15
+      {/* DẢI CỜ TAM GIÁC ĐUÔI NHEO SẮC MÀU THẬP NIÊN CŨ (RESPONSIVE SVG) */}
+      <div className="fixed top-0 left-0 right-0 z-50 w-full overflow-hidden pointer-events-none drop-shadow-sm h-6 flex">
+        {BUNTING_FLAGS.map((color, i) => (
+          <div
+            key={i}
+            className="flex-1 h-full animate-pulse"
+            style={{ 
+              backgroundColor: color,
+              clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+              animationDelay: `${(i % 5) * 0.15}s`,
+              animationDuration: '2.5s'
+            }}
+          />
+        ))}
+      </div>
+
+      {/* THANH ĐIỀU HƯỚNG MANG PHONG CÁCH BĂNG RÔN ĐỎ SAO VÀNG CỔ ĐIỂN */}
+      <nav className="fixed top-4 sm:top-5 left-0 right-0 z-40 px-2 sm:px-6">
+        <div className="max-w-6xl mx-auto backdrop-blur-md bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-yellow-300 border-2 border-yellow-400 rounded-xl sm:rounded-2xl shadow-xl px-3 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between">
+          
+          <div className="flex items-center space-x-1.5 sm:space-x-2 min-w-0">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-yellow-400 text-red-900 font-black text-[11px] sm:text-xs flex items-center justify-center border border-red-900 shadow flex-shrink-0">
+              ★
+            </div>
+            <div className="leading-tight min-w-0">
+              <span className="text-[11px] sm:text-sm font-bold uppercase tracking-wider text-yellow-300 drop-shadow block truncate max-w-[140px] sm:max-w-none">
+                THPT Xuân Đỉnh • A15
+              </span>
+              <span className="hidden md:inline-block text-[11px] text-white/90 ml-2 font-normal">
+                (2022 - 2025)
+              </span>
+            </div>
           </div>
-          <span className="text-sm font-medium tracking-wide text-amber-100/90 hidden sm:inline">
-            THPT Xuân Đỉnh • K65 (2022 - 2025)
-          </span>
-        </div>
 
-        {/* Cụm điều khiển nhạc & link xem ảnh */}
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={scrollToGallery}
-            className="text-xs text-amber-200/80 hover:text-amber-300 transition-colors hidden sm:inline-flex items-center space-x-1 border border-amber-500/20 px-3 py-1.5 rounded-full"
-          >
-            <Camera className="w-3 h-3 text-amber-400" />
-            <span>7 Khoảnh Khắc Của Cô</span>
-          </button>
+          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+            <button
+              onClick={togglePlay}
+              className={`flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold transition-all border cursor-pointer ${
+                isPlaying 
+                  ? 'bg-yellow-400 text-red-900 border-yellow-300 shadow-md animate-pulse'
+                  : 'bg-red-900/90 text-yellow-200 border-yellow-400/60 hover:bg-yellow-400 hover:text-red-900'
+              }`}
+            >
+              <Music className="w-3 sm:w-3.5 h-3 sm:h-3.5 flex-shrink-0" />
+              <span>{isPlaying ? 'Nhạc: Bật 🎵' : 'Mở nhạc'}</span>
+            </button>
+          </div>
 
-          <button
-            onClick={togglePlay}
-            className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer ${
-              isPlaying
-                ? 'bg-amber-500/25 border-amber-400/60 text-amber-300 shadow-md shadow-amber-500/20'
-                : 'bg-stone-900/80 border-stone-700/60 text-stone-300 hover:text-white'
-            }`}
-          >
-            {isPlaying ? (
-              <>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                </span>
-                <Pause className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Đang phát: Bài Ca Người GVND</span>
-                <span className="md:hidden">Đang phát</span>
-              </>
-            ) : (
-              <>
-                <Music className="w-3.5 h-3.5 text-amber-400" />
-                <span>Bật nhạc tri ân</span>
-              </>
-            )}
-          </button>
         </div>
       </nav>
 
-      {/* =========================================================================
-         PHASE 2: HERO SECTION (TRỌNG TÂM LÀ CÔ — SPOTLIGHT GALLERY)
-         ========================================================================= */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-28 pb-20 overflow-hidden">
-        {/* Nền ánh sáng đỏ rượu vang và hoàng kim ấm áp */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1b0810] via-[#0e0709] to-[#0a0708]" />
-          <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-[700px] h-[700px] bg-red-900/15 rounded-full blur-[160px]" />
-          <div className="absolute top-1/2 right-10 w-[550px] h-[550px] bg-amber-600/10 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0708] to-transparent" />
+      {/* HERO SECTION: TÔNG SÁNG, XANH ĐỎ VÀNG SẶC SỠ THẬP NIÊN CŨ */}
+      <section className="relative pt-24 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#fef5e7] via-[#fffaf0] to-[#fffdf8] w-full max-w-full">
+        
+        {/* Nền hoa văn giấy khen cổ điển và tia sáng được bọc kỹ trong container overflow-hidden */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] bg-gradient-to-tr from-yellow-300/40 via-red-300/30 to-emerald-300/30 rounded-full blur-[140px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px]" />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="relative z-10 max-w-6xl mx-auto">
+          
+          {/* Băng Rôn Khẩu Hiệu Đỏ Chữ Vàng Cổ Điển */}
+          <div className="text-center mb-6 sm:mb-8 px-2">
+            <div className="inline-flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-6 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-yellow-300 border-2 border-yellow-400 shadow-lg text-[10px] sm:text-xs md:text-sm font-bold tracking-wider uppercase max-w-full">
+              <Star className="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
+              <span className="truncate">{TRIBUTE_DATA.hero.badge}</span>
+              <Star className="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[repeat(12,minmax(0,1fr))] gap-8 lg:gap-14 items-center w-full">
             
-            {/* CỘT THÔNG ĐIỆP HERO (7 Cột) */}
-            <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+            {/* CỘT NỘI DUNG HERO (7 Cột) */}
+            <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start w-full min-w-0">
               
-              {/* Huy hiệu trang trọng */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: smoothEasing }}
-                className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-950/70 border border-amber-500/40 text-amber-300 text-xs sm:text-sm font-medium tracking-wider uppercase mb-6 shadow-inner shadow-amber-500/15"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                <span>{TRIBUTE_DATA.hero.badge}</span>
-              </motion.div>
-
-              {/* Tiêu đề chính */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.2, ease: smoothEasing }}
-                className="text-3xl sm:text-5xl md:text-6xl font-serif font-normal tracking-tight text-white leading-[1.18] mb-6"
-              >
-                Hơn <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 font-semibold">1000 Ngày</span> Trọn Vẹn
+              {/* Tiêu đề chính rực rỡ phong cách thập niên cũ */}
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-black tracking-tight text-red-800 leading-[1.25] mb-4 drop-shadow-sm max-w-full">
+                Hơn <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-amber-600 to-red-600">1000 Ngày</span> Trọn Vẹn
                 <br />
-                Cùng Cô Lương Thị Kim Lưu
-              </motion.h1>
+                <span className="text-emerald-800">Cùng Cô Lương Thị Kim Lưu</span>
+              </h1>
 
-              {/* Dải phân cách hoa văn */}
-              <motion.div
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.4, ease: smoothEasing }}
-                className="flex items-center space-x-3 w-44 my-2"
-              >
-                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-amber-500/50 to-amber-400" />
-                <Award className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                <div className="h-[1px] w-full bg-gradient-to-l from-transparent via-amber-500/50 to-amber-400" />
-              </motion.div>
+              {/* Băng chữ phong cách giấy khen */}
+              <div className="inline-block px-3 py-1.5 rounded-lg bg-emerald-800 text-yellow-300 font-bold text-[10px] sm:text-xs md:text-sm tracking-wide uppercase border border-yellow-400 mb-4 shadow text-center max-w-full">
+                {TRIBUTE_DATA.hero.subBadge}
+              </div>
 
-              {/* Đoạn văn cảm xúc */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.1, delay: 0.5, ease: smoothEasing }}
-                className="text-base sm:text-lg text-stone-300/90 font-light max-w-xl leading-relaxed mt-4"
-              >
-                Kính gửi người cô kính yêu bộ môn{' '}
-                <span className="text-amber-300 font-medium">{TRIBUTE_DATA.teacher.subject}</span>{' '}
-                — Người đã dùng lòng bao dung, bản lĩnh và tri thức vững vàng để chở che 12A15 K65 qua những năm tháng thanh xuân nhiều biến cố và thử thách nhất.
-              </motion.p>
+              {/* Dải phân cách hoa sen / cờ đỏ */}
+              <div className="flex items-center space-x-3 w-48 sm:w-56 my-2">
+                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-red-600 to-yellow-500" />
+                <div className="w-6 h-6 rounded-full bg-red-600 text-yellow-300 flex items-center justify-center text-xs font-bold border border-yellow-400 shadow">
+                  ★
+                </div>
+                <div className="h-[2px] w-full bg-gradient-to-l from-transparent via-red-600 to-yellow-500" />
+              </div>
 
-              {/* Cụm nút hành động chính */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.7, ease: smoothEasing }}
-                className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4"
-              >
+              {/* Thông điệp tình cảm */}
+              <p className="text-sm sm:text-base md:text-lg text-stone-700 font-normal leading-relaxed mt-3 max-w-xl">
+                Kính gửi người cô kính yêu giảng dạy môn{' '}
+                <strong className="text-red-700 font-bold bg-yellow-200/90 px-1 py-0.5 rounded">
+                  {TRIBUTE_DATA.teacher.subject}
+                </strong>{' '}
+                — Người đã nhẫn nại, tận tâm chở đạo và dùng cả tấm lòng bao dung chở che 12A15 K65 qua những năm tháng học trò đáng nhớ nhất.
+              </p>
+
+              {/* Cụm Nút Hành Động Rực Rỡ */}
+              <div className="mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
                 <button
                   onClick={togglePlay}
-                  className="inline-flex items-center space-x-3 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-sm tracking-wide shadow-lg shadow-amber-500/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center space-x-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold text-xs sm:text-sm tracking-wide shadow-xl border-2 border-yellow-400 transform hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
-                  {isPlaying ? (
-                    <>
-                      <Pause className="w-4 h-4 fill-black" />
-                      <span>Tạm dừng bài hát</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 fill-black" />
-                      <span>Phát nhạc: Bài Ca Người GVND 🎵</span>
-                    </>
-                  )}
+                  <Music className="w-4 h-4 fill-yellow-300" />
+                  <span>{isPlaying ? 'Tạm Dừng Nhạc Nền' : 'Phát Nhạc: Bài Ca Người GVND 🎵'}</span>
                 </button>
 
                 <button
                   onClick={scrollToStory}
-                  className="inline-flex items-center space-x-2 px-5 py-3 rounded-full bg-stone-900/80 hover:bg-stone-800/80 border border-amber-400/30 text-amber-200 text-sm font-medium transition-all cursor-pointer"
+                  className="inline-flex items-center space-x-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm border-2 border-emerald-900 shadow-md transition-all cursor-pointer"
                 >
-                  <span>Khám phá câu chuyện</span>
-                  <ChevronDown className="w-4 h-4 text-amber-300 animate-bounce" />
+                  <span>Lật Mở Từng Trang Ký Ức</span>
+                  <ChevronDown className="w-4 h-4 animate-bounce" />
                 </button>
-              </motion.div>
+              </div>
             </div>
 
-            {/* CỘT KHUNG ẢNH SPOTLIGHT CỦA CÔ (5 Cột — Trọng tâm là cô) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 0.3, ease: smoothEasing }}
-              className="lg:col-span-5 flex flex-col items-center"
-            >
-              {/* Khung ảnh chính phóng to */}
-              <div className="relative group w-full max-w-sm sm:max-w-md">
-                <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/30 via-red-600/20 to-amber-800/40 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-500" />
+            {/* CỘT KHUNG ẢNH CÔ (5 Cột — Trọng tâm là cô với viền hoa văn đỏ vàng) */}
+            <div className="lg:col-span-5 flex flex-col items-center w-full max-w-full">
+              
+              {/* Khung ảnh phong cách bằng khen / kỷ yếu thập niên cũ */}
+              <div className="relative group w-full max-w-[330px] sm:max-w-sm">
                 
-                <div className="relative rounded-2xl overflow-hidden bg-stone-950 border-2 border-amber-400/50 shadow-2xl">
+                {/* Viền ngoài rực rỡ đỏ - vàng */}
+                <div className="p-2 sm:p-3 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-red-700 via-yellow-500 to-emerald-700 shadow-xl border-3 sm:border-4 border-yellow-300">
                   
-                  {/* Badge & Nút phóng to */}
-                  <div className="absolute top-3 left-3 z-20 flex items-center space-x-1.5 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/40 text-[11px] font-medium text-amber-300">
-                    <Sparkle className="w-3 h-3 text-amber-400" />
-                    <span>Khoảnh Khắc Chủ Đạo</span>
-                  </div>
+                  <div className="relative rounded-xl sm:rounded-2xl overflow-hidden bg-white border-2 border-red-800 shadow-inner">
+                    
+                    {/* Góc hoa văn bằng khen cổ điển */}
+                    <div className="absolute top-2 left-2 z-20 px-2.5 sm:px-3 py-1 rounded-full bg-red-700 text-yellow-300 text-[10px] sm:text-[11px] font-bold border border-yellow-300 flex items-center space-x-1 shadow">
+                      <Star className="w-3 h-3 fill-yellow-300" />
+                      <span>Khoảnh Khắc Chủ Đạo</span>
+                    </div>
 
-                  <button
-                    onClick={() => setModalImage({
-                      src: activeHeroPhoto,
-                      title: 'Khoảnh Khắc Tri Ân Cô Lương Thị Kim Lưu',
-                      subtitle: 'Trường THPT Xuân Đỉnh • Giáo viên Chủ nhiệm A15K65'
-                    })}
-                    className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/40 text-amber-300 hover:text-white hover:bg-amber-500/30 transition-all cursor-pointer"
-                    title="Xem ảnh phóng to 100%"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </button>
+                    <button
+                      onClick={() => setModalImage({
+                        src: activeHeroPhoto,
+                        title: 'Khoảnh Khắc Tri Ân Cô Lương Thị Kim Lưu',
+                        subtitle: 'Trường THPT Xuân Đỉnh • Giáo viên Chủ nhiệm A15K65'
+                      })}
+                      className="absolute top-2 right-2 z-20 p-2 rounded-full bg-black/60 text-yellow-300 hover:bg-red-700 border border-yellow-300 transition-colors cursor-pointer"
+                      title="Phóng to ảnh"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </button>
 
-                  {/* Ảnh chính hiển thị 100% tỷ lệ gốc không cắt xén */}
-                  <div 
-                    className="relative aspect-square w-full bg-black flex items-center justify-center overflow-hidden cursor-pointer"
-                    onClick={() => setModalImage({
-                      src: activeHeroPhoto,
-                      title: 'Khoảnh Khắc Tri Ân Cô Lương Thị Kim Lưu',
-                      subtitle: 'Trường THPT Xuân Đỉnh • Giáo viên Chủ nhiệm A15K65'
-                    })}
-                  >
-                    <img
-                      src={activeHeroPhoto}
-                      alt="Cô Lương Thị Kim Lưu"
-                      className="w-full h-full object-contain transform group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-                    />
-                  </div>
+                    {/* Ảnh chính hiển thị 100% tỷ lệ gốc không cắt xén */}
+                    <div 
+                      className="relative aspect-square w-full bg-[#fdfaf3] flex items-center justify-center p-2 cursor-pointer"
+                      onClick={() => setModalImage({
+                        src: activeHeroPhoto,
+                        title: 'Khoảnh Khắc Tri Ân Cô Lương Thị Kim Lưu',
+                        subtitle: 'Trường THPT Xuân Đỉnh • Giáo viên Chủ nhiệm A15K65'
+                      })}
+                    >
+                      <img
+                        src={activeHeroPhoto}
+                        alt="Cô Lương Thị Kim Lưu"
+                        className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500"
+                      />
+                    </div>
 
-                  {/* Chú thích chân ảnh */}
-                  <div className="p-3 bg-gradient-to-r from-stone-950 via-[#180a0f] to-stone-950 border-t border-amber-500/20 text-center">
-                    <p className="text-xs text-amber-200/90 font-serif">
-                      Cô Lương Thị Kim Lưu — Giáo viên Kinh tế và Pháp luật
-                    </p>
-                    <p className="text-[11px] text-stone-400 font-light mt-0.5">
-                      Bấm vào ảnh để xem độ phân giải cao nhất
-                    </p>
+                    {/* Dải chân khung đỏ viền vàng */}
+                    <div className="p-2.5 sm:p-3 bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-yellow-200 text-center border-t-2 border-yellow-400">
+                      <p className="text-xs sm:text-sm font-bold font-serif tracking-wide">
+                        Cô Lương Thị Kim Lưu — Giáo viên Kinh tế và Pháp luật
+                      </p>
+                      <p className="text-[10px] sm:text-[11px] text-yellow-100 font-light mt-0.5">
+                        Bấm vào ảnh để xem độ phân giải cao nhất
+                      </p>
+                    </div>
+
                   </div>
                 </div>
+
               </div>
 
-              {/* Dải thumbnail chuyển nhanh các ảnh khác của Cô ngay tại Hero */}
-              <div className="mt-4 flex items-center space-x-2 overflow-x-auto p-1.5 rounded-xl bg-stone-900/60 border border-amber-500/20 max-w-sm sm:max-w-md">
+              {/* Dải thumbnail 7 ảnh cô */}
+              <div className="mt-4 flex items-center space-x-2 overflow-x-auto p-2 rounded-xl bg-white border-2 border-yellow-500/50 shadow-md max-w-sm sm:max-w-md">
                 {[
-                  { src: PHOTOS.banner, label: 'Banner Vinh Danh' },
+                  { src: PHOTOS.banner, label: 'Banner Tri Ân' },
                   { src: PHOTOS.portraitPink, label: 'Áo Dài Hồng' },
-                  { src: PHOTOS.teaching10A15, label: 'Đứng Lớp 10A15' },
-                  { src: PHOTOS.classroomB105, label: 'Phòng B105' },
+                  { src: PHOTOS.teaching10A15, label: 'Bục Giảng 10A15' },
+                  { src: PHOTOS.classroomB105, label: 'Cửa Lớp B105' },
                   { src: PHOTOS.yellowDress, label: 'Áo Vàng 30/4' },
                   { src: PHOTOS.redDressNation, label: 'Áo Đỏ 2/9' },
                   { src: PHOTOS.outdoorSmile, label: 'Đời Thường' },
@@ -461,10 +474,10 @@ export default function TributeLandingPage() {
                   <button
                     key={idx}
                     onClick={() => setActiveHeroPhoto(item.src)}
-                    className={`relative w-11 h-11 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all cursor-pointer ${
+                    className={`relative w-10 sm:w-11 h-10 sm:h-11 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-all cursor-pointer ${
                       activeHeroPhoto === item.src 
-                        ? 'border-amber-400 scale-105 shadow-md shadow-amber-500/30' 
-                        : 'border-transparent opacity-60 hover:opacity-100'
+                        ? 'border-red-600 scale-110 shadow-lg ring-2 ring-yellow-400' 
+                        : 'border-stone-300 opacity-60 hover:opacity-100'
                     }`}
                     title={item.label}
                   >
@@ -472,53 +485,56 @@ export default function TributeLandingPage() {
                   </button>
                 ))}
               </div>
-              <span className="text-[11px] text-amber-300/70 mt-1.5 font-light">
+              <span className="text-[11px] text-red-800 font-medium mt-1.5">
                 👆 Bấm vào từng ảnh nhỏ để đổi ảnh hiển thị của cô
               </span>
-            </motion.div>
+
+            </div>
 
           </div>
         </div>
       </section>
 
-      {/* =========================================================================
-         PHASE 3: CÂU CHUYỆN THẤU HIỂU (SCROLLYTELLING CÓ ẢNH THỰC TẾ TỪNG CHƯƠNG)
-         ========================================================================= */}
-      <section id="scrollytelling" className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-amber-900/20">
+      {/* BẢNG HIỆU KHẨU HIỆU TRƯỜNG HỌC THẬP NIÊN CŨ (ĐỎ CHỮ VÀNG) */}
+      <section className="bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-yellow-300 py-3.5 sm:py-4 px-3 sm:px-4 border-y-4 border-yellow-400 shadow-md w-full max-w-full overflow-hidden">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-2 sm:gap-3 w-full">
+          <div className="flex items-center space-x-2 sm:space-x-3 max-w-full">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-yellow-400 text-red-900 flex items-center justify-center font-bold text-xs sm:text-sm flex-shrink-0">
+              ★
+            </div>
+            <div className="font-serif font-black text-[11px] sm:text-sm md:text-base tracking-wide uppercase break-words text-center md:text-left">
+              "HỌC ĐỂ BIẾT, HỌC ĐỂ LÀM VIỆC, HỌC ĐỂ CHUNG SỐNG, HỌC ĐỂ HOÀN THIỆN NHÂN CÁCH"
+            </div>
+          </div>
+          <div className="text-[10px] sm:text-xs font-bold text-white bg-red-950/70 px-3 py-1 rounded-full border border-yellow-300/60 flex-shrink-0 mt-1 md:mt-0">
+            Khẩu hiệu trường học • THPT Xuân Đỉnh
+          </div>
+        </div>
+      </section>
+
+      {/* PHASE 3: CÂU CHUYỆN THẤU HIỂU (SCROLLYTELLING CÓ ẢNH THẬP NIÊN CŨ) */}
+      <section id="scrollytelling" className="py-20 sm:py-24 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full overflow-hidden">
         
         {/* Tiêu đề phần */}
-        <div className="text-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center space-x-2 text-xs tracking-widest uppercase text-amber-400 font-medium mb-3"
-          >
+        <div className="text-center mb-16 sm:mb-20">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-800 text-yellow-300 text-xs font-bold uppercase tracking-widest mb-3 border border-yellow-400 shadow">
             <Clock className="w-3.5 h-3.5" />
             <span>Hành Trình Đồng Hành & Thấu Cảm</span>
-          </motion.div>
-          
-          <motion.h2
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.9, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-serif text-white tracking-tight"
-          >
-            Những Điều Chúng Em Khắc Ghi
-          </motion.h2>
-          <p className="mt-4 text-stone-400 text-sm sm:text-base max-w-xl mx-auto font-light">
+          </div>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-black text-red-800 tracking-tight">
+            Những Điều Tập Thể 12A15 Khắc Ghi
+          </h2>
+          <p className="mt-3 text-stone-600 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
             Mỗi chặng đường 1000 ngày đều in đậm dấu ấn tận tụy của cô Lưu — từ bục giảng B105 đến từng bước đường đời.
           </p>
         </div>
 
-        {/* Trục thời gian (Timeline Spine) */}
-        <div className="relative">
-          <div className="absolute left-6 md:left-1/2 top-4 bottom-4 -translate-x-1/2 w-[2px] bg-gradient-to-b from-amber-500/20 via-amber-500/50 to-amber-500/10 pointer-events-none" />
+        {/* Trục thời gian (Timeline) */}
+        <div className="relative w-full">
+          <div className="absolute left-3.5 sm:left-4 md:left-1/2 top-4 bottom-4 -translate-x-1/2 w-[3px] bg-gradient-to-b from-red-600 via-yellow-500 to-emerald-600 pointer-events-none" />
 
-          {/* 3 Thẻ Scrollytelling — KÈM HÌNH ẢNH CHÂN THỰC CỦA CÔ */}
-          <div className="space-y-24 md:space-y-32">
+          {/* 3 Thẻ Câu Chuyện */}
+          <div className="space-y-16 md:space-y-28 w-full">
             {TRIBUTE_DATA.stories.map((story, index) => {
               const isEven = index % 2 === 0;
               const IconComponent = story.icon;
@@ -526,47 +542,41 @@ export default function TributeLandingPage() {
               return (
                 <div
                   key={story.id}
-                  className={`relative flex flex-col md:flex-row items-center ${
+                  className={`relative flex flex-col md:flex-row items-center w-full ${
                     isEven ? 'md:flex-row-reverse' : ''
                   }`}
                 >
-                  {/* Điểm nút trên trục */}
-                  <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-[#140a0e] border-2 border-amber-400/80 shadow-lg shadow-amber-500/20">
-                    <IconComponent className="w-5 h-5 text-amber-300" />
+                  {/* Điểm nút trên trục: Ngôi sao đỏ vàng */}
+                  <div className="absolute left-3.5 sm:left-4 md:left-1/2 -translate-x-1/2 z-20 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-red-700 text-yellow-300 border-2 sm:border-3 border-yellow-400 shadow-xl">
+                    <IconComponent className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                   </div>
 
-                  {/* Khoảng trống đối trọng */}
                   <div className="hidden md:block md:w-1/2" />
 
-                  {/* Khối Thẻ Nội Dung (Card) */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 40, scale: 0.96 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.9, ease: smoothEasing }}
-                    className={`w-full md:w-1/2 pl-16 md:pl-0 ${
+                  {/* Khối Thẻ phong cách Bằng Khen */}
+                  <div
+                    className={`w-full md:w-1/2 pl-7 sm:pl-10 md:pl-0 box-border ${
                       isEven ? 'md:pr-10' : 'md:pl-10'
                     }`}
                   >
-                    <div className="relative group p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-stone-900/95 to-[#140b0f]/95 border border-amber-500/25 hover:border-amber-400/50 transition-all duration-500 shadow-2xl shadow-black/80 backdrop-blur-md">
+                    <div className="p-5 sm:p-8 rounded-2xl bg-white border-2 border-red-700 shadow-xl relative overflow-hidden group hover:border-yellow-500 transition-colors">
                       
-                      {/* Số thứ tự nghệ thuật */}
-                      <span className="absolute top-4 right-6 text-5xl font-serif font-black text-amber-500/10 select-none">
+                      {/* Huy hiệu số thứ tự */}
+                      <div className="absolute top-0 right-0 w-12 sm:w-16 h-12 sm:h-16 bg-red-700 text-yellow-300 font-serif font-black text-base sm:text-xl flex items-center justify-center rounded-bl-3xl border-b-2 border-l-2 border-yellow-400 shadow">
                         {story.number}
-                      </span>
+                      </div>
 
-                      {/* Phụ đề & Tiêu đề */}
-                      <span className="inline-block text-xs font-medium text-amber-400/90 uppercase tracking-wider mb-2">
+                      <span className="inline-block text-[11px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1.5 sm:mb-2">
                         {story.subtitle}
                       </span>
-                      <h3 className="text-xl sm:text-2xl font-serif text-white font-medium mb-4 leading-snug">
+                      <h3 className="text-lg sm:text-2xl font-serif text-red-800 font-black mb-3 pr-12 leading-snug">
                         {story.title}
                       </h3>
 
-                      {/* BỨC ẢNH CỦA CÔ TƯƠNG ỨNG VỚI NỘI DUNG CHƯƠNG */}
-                      <div className="my-5 rounded-xl overflow-hidden border border-amber-500/30 bg-black group-hover:border-amber-400/50 transition-colors">
+                      {/* Bức ảnh thực tế của cô trong khung sáng ấm áp */}
+                      <div className="my-3 sm:my-4 rounded-xl overflow-hidden border-2 border-amber-300 bg-[#fdf9f0] group-hover:border-red-600 transition-colors shadow">
                         <div 
-                          className="relative aspect-video sm:aspect-[16/10] overflow-hidden cursor-pointer"
+                          className="relative aspect-video sm:aspect-[16/10] overflow-hidden cursor-pointer bg-[#f7eedc] flex items-center justify-center p-1"
                           onClick={() => setModalImage({
                             src: story.image,
                             title: story.title,
@@ -576,9 +586,9 @@ export default function TributeLandingPage() {
                           <img
                             src={story.image}
                             alt={story.imageCaption}
-                            className="w-full h-full object-contain bg-black/80 hover:scale-105 transition-transform duration-700 ease-out"
+                            className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
                           />
-                          <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-sm border border-amber-400/30 text-[10px] text-amber-300 font-medium">
+                          <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-red-700 text-yellow-300 text-[10px] font-bold border border-yellow-300 shadow">
                             {story.imageTag}
                           </div>
                           <button
@@ -590,32 +600,31 @@ export default function TributeLandingPage() {
                                 subtitle: story.imageCaption
                               });
                             }}
-                            className="absolute top-2 right-2 p-1.5 rounded-full bg-black/75 text-amber-300 hover:text-white transition-colors"
-                            title="Phóng to"
+                            className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white hover:bg-red-600 transition-colors"
                           >
                             <Maximize2 className="w-3 h-3" />
                           </button>
                         </div>
-                        <div className="p-2.5 bg-black/60 border-t border-amber-500/15 text-center">
-                          <p className="text-[11px] text-stone-300 italic">
+                        <div className="p-2 sm:p-2.5 bg-yellow-50 border-t border-amber-200 text-center">
+                          <p className="text-xs text-stone-700 font-medium italic">
                             📸 {story.imageCaption}
                           </p>
                         </div>
                       </div>
 
-                      {/* Nội dung câu chuyện */}
-                      <p className="text-stone-300/90 text-sm sm:text-base leading-relaxed font-light mb-6">
+                      <p className="text-stone-700 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-5">
                         {story.content}
                       </p>
 
-                      {/* Trích dẫn nổi bật */}
-                      <div className="border-l-2 border-amber-400/60 pl-4 py-1.5 bg-amber-500/[0.04] rounded-r-lg">
-                        <p className="text-xs sm:text-sm text-amber-200/90 italic font-serif leading-relaxed">
+                      {/* Trích dẫn nổi bật nền vàng chữ đỏ */}
+                      <div className="border-l-4 border-red-600 pl-3.5 py-1.5 sm:py-2 bg-yellow-100/90 rounded-r-lg">
+                        <p className="text-xs sm:text-sm text-red-900 font-serif italic font-semibold leading-relaxed">
                           "{story.highlight}"
                         </p>
                       </div>
+
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               );
             })}
@@ -624,219 +633,224 @@ export default function TributeLandingPage() {
       </section>
 
       {/* =========================================================================
-         SECTION MỚI: BỘ SƯU TẬP 7 KHOẢNH KHẮC ĐẦY ĐỦ CỦA CÔ (PHOTO SHOWCASE)
+         BẢNG ĐEN TRƯỜNG HỌC THẬP NIÊN CŨ (VINTAGE CHALKBOARD SECTION)
          ========================================================================= */}
-      <section id="gallery" className="py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-amber-900/20">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-amber-400 font-medium mb-2">
-            <Camera className="w-3.5 h-3.5" />
-            <span>Thư Viện Kỷ Niệm A15K65</span>
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0b3d2c] via-[#064e3b] to-[#043327] text-white border-y-4 border-yellow-400 shadow-2xl">
+        <div className="max-w-5xl mx-auto">
+          
+          <div className="text-center mb-10 sm:mb-12">
+            <div className="inline-block px-3.5 py-1 rounded-full bg-yellow-400 text-emerald-950 font-bold text-xs uppercase tracking-wider mb-2">
+              Bục Giảng Thân Thương 10A15 - 12A15
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-black text-yellow-300">
+              Bài Giảng Kinh Tế & Pháp Luật Của Cô
+            </h2>
+            <p className="mt-2 text-emerald-100 text-xs sm:text-sm max-w-xl mx-auto">
+              Không chỉ là điểm số thi cử, đó là những bài học làm người ngay thẳng, tôn trọng kỷ cương và sống có trách nhiệm với quê hương, đất nước.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white font-normal">
-            Bộ Sưu Tập Hình Ảnh Cô Lương Thị Kim Lưu
-          </h2>
-          <p className="mt-3 text-stone-400 text-sm sm:text-base max-w-2xl mx-auto font-light">
-            Trọn vẹn 7 bức ảnh chân thực nhất: từ nét nghiêm nghị bản lĩnh trên bục giảng đến nụ cười ấm áp, rạng rỡ của người cô kính yêu.
-          </p>
 
-          {/* Bộ lọc theo danh mục */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setGalleryFilter(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                  galleryFilter === cat
-                    ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20 font-semibold'
-                    : 'bg-stone-900/80 text-stone-300 hover:text-white border border-stone-800'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-[repeat(3,minmax(0,1fr))] gap-5 sm:gap-6 w-full">
+            <div className="p-5 sm:p-6 rounded-2xl bg-emerald-900/60 border-2 border-emerald-500/50 backdrop-blur-sm text-center min-w-0">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-yellow-400 text-emerald-900 font-black text-lg sm:text-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow">
+                1
+              </div>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-yellow-300 mb-1.5 sm:mb-2">
+                Kiến Thức Vững Vàng
+              </h3>
+              <p className="text-xs text-emerald-100 leading-relaxed">
+                Từng trang giáo án môn GD Kinh tế & Pháp luật luôn được cô chuẩn bị chỉn chu, truyền đạt khúc chiết và mạch lạc.
+              </p>
+            </div>
+
+            <div className="p-5 sm:p-6 rounded-2xl bg-emerald-900/60 border-2 border-emerald-500/50 backdrop-blur-sm text-center">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-yellow-400 text-emerald-900 font-black text-lg sm:text-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow">
+                2
+              </div>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-yellow-300 mb-1.5 sm:mb-2">
+                Bao Dung & Nhẫn Nại
+              </h3>
+              <p className="text-xs text-emerald-100 leading-relaxed">
+                Đối diện với 9 bạn học sinh đặc biệt trong 2 năm đầu, cô chọn ở lại, không buông tay và kiên nhẫn uốn nắn từng ngày.
+              </p>
+            </div>
+
+            <div className="p-5 sm:p-6 rounded-2xl bg-emerald-900/60 border-2 border-emerald-500/50 backdrop-blur-sm text-center">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-yellow-400 text-emerald-900 font-black text-lg sm:text-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow">
+                3
+              </div>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-yellow-300 mb-1.5 sm:mb-2">
+                Tình Thương Lặng Lẽ
+              </h3>
+              <p className="text-xs text-emerald-100 leading-relaxed">
+                Dù kiệm lời ngọt ngào, nhưng mỗi hành động của cô đều bảo bọc và hướng tập thể 12A15 K65 đến bến đỗ bình an.
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Lưới hình ảnh (Gallery Grid hiển thị tối thiểu 90-100% hình gốc) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredGallery.map((item) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative group rounded-2xl overflow-hidden bg-stone-900/90 border border-amber-500/20 hover:border-amber-400/60 shadow-xl transition-all duration-500 flex flex-col justify-between"
-            >
-              {/* Nút xem to */}
-              <button
-                onClick={() => setModalImage({ 
-                  src: item.src, 
-                  title: item.title, 
-                  subtitle: item.subtitle,
-                  description: item.description 
-                })}
-                className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/40 text-amber-300 hover:text-white hover:bg-amber-500/30 transition-all cursor-pointer"
-                title="Phóng to ảnh 100%"
-              >
-                <Maximize2 className="w-3.5 h-3.5" />
-              </button>
-
-              {/* Tag phân loại */}
-              <div className="absolute top-3 left-3 z-20 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[10px] text-amber-300 font-medium">
-                {item.category}
-              </div>
-
-              {/* Khung ảnh: Hiển thị trọn vẹn 90-100% tỷ lệ gốc bằng object-contain */}
-              <div 
-                className="relative aspect-[4/5] bg-black flex items-center justify-center p-2 cursor-pointer overflow-hidden"
-                onClick={() => setModalImage({ 
-                  src: item.src, 
-                  title: item.title, 
-                  subtitle: item.subtitle,
-                  description: item.description 
-                })}
-              >
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              </div>
-
-              {/* Nội dung chú thích */}
-              <div className="p-5 bg-gradient-to-t from-stone-950 via-stone-900 to-transparent border-t border-amber-500/20">
-                <span className="text-[11px] text-amber-400/90 font-mono uppercase tracking-wider block mb-1">
-                  {item.subtitle}
-                </span>
-                <h3 className="text-base font-serif text-white font-medium mb-1.5 leading-snug">
-                  {item.title}
-                </h3>
-                <p className="text-xs text-stone-400 font-light leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </section>
 
       {/* =========================================================================
-         PHASE 4: LỜI TRI ÂN & BỨC ẢNH THỨ 2 (STICKY REVEAL SECTION)
+         BỘ SƯU TẬP 7 KHOẢNH KHẮC CỦA CÔ (ALBUM NIÊN KHÓA VINTAGE)
          ========================================================================= */}
-      <section className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-amber-900/20">
-        
-        <div className="absolute top-1/2 right-10 w-96 h-96 bg-amber-700/10 rounded-full blur-[140px] pointer-events-none" />
+      <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-red-700 text-yellow-300 text-xs font-bold uppercase tracking-wider mb-3 border border-yellow-400 shadow">
+            <Camera className="w-3.5 h-3.5" />
+            <span>Kỷ Yếu A15K65 • THPT Xuân Đỉnh</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-black text-red-800">
+            Bộ Sưu Tập Hình Ảnh Cô Lương Thị Kim Lưu
+          </h2>
+          <p className="mt-3 text-stone-600 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
+            Toàn bộ 7 bức ảnh lưu giữ những khoảnh khắc đẹp nhất: từ bục giảng thân thương đến nụ cười rạng ngời của người cô kính yêu.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* CỘT TRÁI: GHIM CỐ ĐỊNH (STICKY) BỨC ẢNH CÔ VẪY TAY TRONG TÀ ÁO DÀI HỒNG */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, ease: smoothEasing }}
-              className="relative mx-auto max-w-sm sm:max-w-md lg:max-w-none"
+        {/* Lưới 7 Ảnh Vintage */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,1fr))] gap-6 sm:gap-8 w-full">
+          {TRIBUTE_DATA.gallery.map((item) => (
+            <div
+              key={item.id}
+              className="rounded-2xl overflow-hidden bg-white border-2 border-red-700 shadow-xl hover:border-yellow-500 transition-all flex flex-col justify-between group min-w-0"
             >
-              {/* Viền mạ vàng phát sáng */}
-              <div className="absolute -inset-1.5 bg-gradient-to-br from-amber-400/40 via-amber-600/20 to-amber-900/40 rounded-3xl blur-sm" />
-              
-              <div className="relative rounded-2xl overflow-hidden bg-stone-900 border border-amber-400/40 shadow-2xl">
-                
-                {/* Nút phóng to ảnh */}
+              <div className="relative">
+                {/* Tag màu sắc */}
+                <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-full bg-red-700 text-yellow-300 text-[10px] sm:text-[11px] font-bold border border-yellow-300 shadow">
+                  {item.tag}
+                </div>
+
                 <button
-                  onClick={() => setModalImage({
-                    src: PHOTOS.portraitPink,
-                    title: 'Cô Lương Thị Kim Lưu — Nụ Cười Của Người Lái Đò A15K65',
-                    subtitle: 'Bức ảnh chân thực lưu giữ trọn vẹn 95.2% hình ảnh gốc'
+                  onClick={() => setModalImage({ 
+                    src: item.src, 
+                    title: item.title, 
+                    subtitle: item.subtitle,
+                    description: item.description 
                   })}
-                  className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/40 text-amber-300 hover:text-white hover:bg-amber-500/30 transition-all cursor-pointer"
-                  title="Phóng to ảnh gốc"
+                  className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/60 text-yellow-300 hover:bg-red-700 border border-yellow-300 transition-colors cursor-pointer"
+                  title="Phóng to ảnh"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Khung ảnh chân dung dọc (Giữ >95% ảnh gốc, không cắt bàn tay vẫy chào và nụ cười) */}
+                {/* Khung ảnh hiển thị trọn vẹn 100% tỷ lệ gốc */}
                 <div 
-                  className="relative w-full bg-black flex items-center justify-center overflow-hidden max-h-[640px] cursor-pointer"
+                  className="relative aspect-[4/5] bg-[#f8f4eb] flex items-center justify-center p-2 cursor-pointer overflow-hidden"
+                  onClick={() => setModalImage({ 
+                    src: item.src, 
+                    title: item.title, 
+                    subtitle: item.subtitle,
+                    description: item.description 
+                  })}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+
+              {/* Chú thích chân ảnh */}
+              <div className="p-4 sm:p-5 bg-gradient-to-b from-yellow-50/50 to-yellow-100/50 border-t-2 border-yellow-400">
+                <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block mb-1">
+                  {item.subtitle}
+                </span>
+                <h3 className="text-sm sm:text-base font-serif font-black text-red-800 mb-1.5 leading-snug">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* PHASE 4: STICKY REVEAL (LỜI TRI ÂN & CHÂN DUNG ÁO DÀI HỒNG VẪY TAY) */}
+      <section className="relative py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t-4 border-yellow-400 bg-gradient-to-b from-white via-[#fefaf0] to-white overflow-hidden">
+        
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-amber-500/10 rounded-full blur-[140px]" />
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-[repeat(12,minmax(0,1fr))] gap-10 lg:gap-12 items-start w-full">
+          
+          {/* CỘT TRÁI: GHIM CỐ ĐỊNH (STICKY) BỨC ẢNH CÔ VẪY TAY ÁO DÀI HỒNG */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 min-w-0 w-full">
+            <div className="p-2.5 sm:p-3.5 rounded-3xl bg-gradient-to-br from-red-700 via-yellow-500 to-red-800 shadow-2xl border-4 border-yellow-300 max-w-[330px] sm:max-w-sm mx-auto">
+              
+              <div className="relative rounded-2xl overflow-hidden bg-white border-2 border-red-800 shadow-inner">
+                
+                <button
                   onClick={() => setModalImage({
                     src: PHOTOS.portraitPink,
                     title: 'Cô Lương Thị Kim Lưu — Nụ Cười Của Người Lái Đò A15K65',
-                    subtitle: 'Bức ảnh chân thực lưu giữ trọn vẹn 95.2% hình ảnh gốc'
+                    subtitle: 'Bức ảnh chân thực giữ trọn vẹn 95.2% hình ảnh gốc'
+                  })}
+                  className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/60 text-yellow-300 hover:bg-red-700 border border-yellow-300 transition-colors cursor-pointer"
+                  title="Phóng to ảnh"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Khung ảnh dọc */}
+                <div 
+                  className="relative w-full bg-[#f8f5ee] flex items-center justify-center overflow-hidden max-h-[620px] cursor-pointer"
+                  onClick={() => setModalImage({
+                    src: PHOTOS.portraitPink,
+                    title: 'Cô Lương Thị Kim Lưu — Nụ Cười Của Người Lái Đò A15K65',
+                    subtitle: 'Bức ảnh chân thực giữ trọn vẹn 95.2% hình ảnh gốc'
                   })}
                 >
                   <img
                     src={PHOTOS.portraitPink}
                     alt={TRIBUTE_DATA.teacher.name}
-                    className="w-full h-auto max-h-[640px] object-contain hover:scale-[1.02] transition-transform duration-700 ease-out"
+                    className="w-full h-auto max-h-[620px] object-contain hover:scale-105 transition-transform duration-500"
                   />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent pointer-events-none" />
                   
-                  {/* Chú thích trên ảnh */}
-                  <div className="absolute bottom-4 left-4 right-4 text-center">
-                    <span className="text-[11px] uppercase tracking-widest text-amber-300/80 font-medium block mb-1">
+                  {/* Băng chữ dưới chân ảnh */}
+                  <div className="absolute bottom-3 left-3 right-3 bg-red-800/90 text-yellow-200 text-center py-2 px-3 rounded-xl border border-yellow-300 shadow">
+                    <span className="text-[10px] uppercase tracking-widest text-yellow-300 font-bold block">
                       Kính Yêu & Biết Ơn
                     </span>
-                    <h4 className="text-lg sm:text-xl font-serif text-white font-medium">
+                    <h4 className="text-sm sm:text-base font-serif font-black text-white">
                       {TRIBUTE_DATA.teacher.name}
                     </h4>
-                    <p className="text-xs text-stone-300 font-light mt-0.5">
+                    <p className="text-[10px] sm:text-[11px] text-yellow-100 mt-0.5">
                       Nụ cười rạng rỡ của người lái đò A15K65
                     </p>
                   </div>
                 </div>
 
-                {/* Dải thông điệp chân khung */}
-                <div className="p-3.5 bg-gradient-to-r from-stone-900 via-[#180a0f] to-stone-900 border-t border-amber-500/20 text-center flex items-center justify-between px-4">
-                  <span className="text-xs text-amber-200/80 font-serif italic">
+                <div className="p-2.5 sm:p-3 bg-red-800 text-yellow-200 text-center border-t-2 border-yellow-400">
+                  <span className="text-xs font-serif font-bold italic">
                     "Tận tâm chở đạo, chở người qua sông..."
                   </span>
-                  <button
-                    onClick={() => setModalImage({
-                      src: PHOTOS.portraitPink,
-                      title: 'Cô Lương Thị Kim Lưu',
-                      subtitle: 'THPT Xuân Đỉnh • A15K65'
-                    })}
-                    className="text-[11px] text-amber-300 hover:underline cursor-pointer"
-                  >
-                    Xem toàn màn hình
-                  </button>
                 </div>
+
               </div>
-            </motion.div>
+            </div>
           </div>
 
-          {/* CỘT PHẢI: CUỘN LỜI TRI ÂN & LỜI CHÚC TÙY BIẾN */}
-          <div className="lg:col-span-7 space-y-8">
+          {/* CỘT PHẢI: BỨC THƯ TRI ÂN TRÊN NỀN GIẤY HOA VĂN */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8 min-w-0 w-full">
             
-            {/* Header Lời Tri Ân */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-flex items-center space-x-2 text-xs font-medium tracking-widest uppercase text-amber-400 mb-2">
+            <div>
+              <div className="inline-flex items-center space-x-2 text-xs font-bold tracking-widest uppercase text-red-700 mb-2">
                 <Quote className="w-3.5 h-3.5" />
                 <span>Bức Thư Tri Ân Cuối Cấp</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-serif text-white font-normal leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-black text-red-800 leading-tight">
                 Lời Tri Ân Từ Trái Tim Tập Thể 12A15
               </h2>
-            </motion.div>
+            </div>
 
-            {/* Nội dung tâm thư */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.1 }}
-              className="prose prose-invert max-w-none text-stone-300 text-base sm:text-lg leading-relaxed font-light space-y-5"
-            >
+            <div className="prose max-w-none text-stone-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3.5 sm:space-y-4">
               <p>
-                Kính gửi <strong className="text-amber-200 font-medium">Cô Lương Thị Kim Lưu</strong>,
+                Kính gửi <strong className="text-red-800 font-bold">Cô Lương Thị Kim Lưu</strong>,
               </p>
               <p>
                 Những ngày cuối cùng của đời học sinh THPT đang dần khép lại. Ba năm dưới mái trường Xuân Đỉnh với hơn 1000 ngày gắn bó, chúng em có thể đã từng là những đứa trẻ bướng bỉnh, có lúc vô tâm chưa thấu hiểu hết những âu lo và áp lực nặng nề mà cô phải đối diện.
@@ -847,35 +861,27 @@ export default function TributeLandingPage() {
               <p>
                 Môn Giáo dục Kinh tế và Pháp luật có thể khô khan trong mắt nhiều người, nhưng qua từng bài giảng tâm huyết của cô, chúng em học được lòng trung thực, ý thức trách nhiệm và cách sống ngay thẳng giữa cuộc đời.
               </p>
-            </motion.div>
+            </div>
 
-            {/* Khối Lời Cảm Ơn và Lời Chúc Tùy Biến */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-amber-950/30 via-stone-900/60 to-black/80 border border-amber-500/30 shadow-2xl relative overflow-hidden"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold flex items-center gap-1.5">
-                  <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" />
-                  Thông điệp kết
+            {/* Khối Điểm Nhấn: Lời cảm ơn và Lời chúc có thể chỉnh sửa */}
+            <div className="p-5 sm:p-8 rounded-2xl bg-gradient-to-br from-yellow-50 via-white to-yellow-100 border-2 border-red-700 shadow-xl relative">
+              <div className="flex items-start justify-between mb-3 sm:mb-4">
+                <span className="text-xs uppercase tracking-widest text-red-700 font-bold flex items-center gap-1.5">
+                  <Heart className="w-4 h-4 text-red-600 fill-red-600" />
+                  Thông điệp tri ân
                 </span>
                 <button
                   onClick={() => setIsEditingWish(!isEditingWish)}
-                  className="text-xs text-amber-300 hover:text-amber-200 underline underline-offset-4 cursor-pointer transition-colors"
+                  className="text-xs font-bold text-red-700 hover:text-red-900 underline underline-offset-4 cursor-pointer"
                 >
                   {isEditingWish ? 'Xong' : 'Chỉnh sửa lời chúc'}
                 </button>
               </div>
 
-              {/* Lời Cảm Ơn Cốt Lõi */}
-              <h3 className="text-xl sm:text-2xl font-serif text-amber-200 font-semibold mb-3">
+              <h3 className="text-lg sm:text-2xl font-serif text-red-800 font-black mb-3 leading-snug">
                 "{TRIBUTE_DATA.closing.quoteLead}"
               </h3>
 
-              {/* Phần Lời Chúc */}
               <AnimatePresence mode="wait">
                 {isEditingWish ? (
                   <motion.div
@@ -889,10 +895,10 @@ export default function TributeLandingPage() {
                       value={customWish}
                       onChange={(e) => setCustomWish(e.target.value)}
                       rows={4}
-                      className="w-full bg-black/60 border border-amber-500/40 rounded-xl p-3.5 text-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/50 resize-none font-light leading-relaxed"
+                      className="w-full bg-white border-2 border-red-400 rounded-xl p-3.5 text-stone-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-red-500 resize-none font-normal leading-relaxed shadow-inner"
                       placeholder="Điền lời chúc của bạn gửi tới cô..."
                     />
-                    <p className="text-[11px] text-stone-400 italic">
+                    <p className="text-[11px] text-stone-500 italic">
                       * Bạn có thể tự do chỉnh sửa và thêm lời chúc riêng của mình.
                     </p>
                   </motion.div>
@@ -902,92 +908,92 @@ export default function TributeLandingPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-stone-300 text-sm sm:text-base leading-relaxed font-light italic"
+                    className="text-stone-700 text-xs sm:text-sm md:text-base leading-relaxed italic font-medium"
                   >
                     "{customWish}"
                   </motion.p>
                 )}
               </AnimatePresence>
 
-              {/* Chữ ký tập thể */}
-              <div className="mt-8 pt-6 border-t border-amber-500/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t-2 border-red-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                  <div className="font-serif text-white font-medium text-base">
+                  <div className="font-serif font-black text-red-800 text-sm sm:text-base">
                     {TRIBUTE_DATA.closing.signOff}
                   </div>
-                  <div className="text-xs text-amber-400/80 font-light">
+                  <div className="text-xs font-bold text-emerald-800">
                     {TRIBUTE_DATA.closing.schoolName}
                   </div>
                 </div>
 
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center justify-center space-x-2 px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs font-medium transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center space-x-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-red-700 hover:bg-red-800 text-yellow-300 font-bold text-xs border border-yellow-300 shadow-md cursor-pointer transition-all"
                 >
                   {isCopied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-4 h-4 text-green-300" />
                       <span>Đã sao chép lời chúc!</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5" />
+                      <Copy className="w-4 h-4" />
                       <span>Sao chép thông điệp</span>
                     </>
                   )}
                 </button>
               </div>
-            </motion.div>
-
-            <div className="pt-4 text-center sm:text-left text-xs text-stone-500 font-light">
-              Lưu giữ mãi những kỷ niệm đẹp nhất niên khóa 2022 - 2025 • THPT Xuân Đỉnh
             </div>
+
+            <div className="pt-2 text-center sm:text-left text-xs text-stone-500">
+              Lưu giữ mãi những kỷ niệm đẹp nhất niên khóa 2022 - 2025 • Trường THPT Xuân Đỉnh
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-         FLOATING AUDIO CONTROLLER (WIDGET NHẠC NỀN GÓC PHẢI DƯỚI)
+         FLOATING AUDIO CONTROLLER (WIDGET ĐĨA THAN NHẠC NỀN)
          ========================================================================= */}
-      <aside aria-label="Trình phát nhạc nền" className="fixed bottom-6 right-6 z-50">
-        <div className="flex items-center space-x-3 p-2.5 sm:px-4 sm:py-2.5 rounded-2xl bg-black/85 backdrop-blur-md border border-amber-500/40 shadow-2xl shadow-black">
+      <aside aria-label="Trình phát nhạc nền" className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
+        <div className="flex items-center space-x-2.5 sm:space-x-3 p-2 sm:px-4 sm:py-2.5 rounded-2xl bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-yellow-300 border-2 border-yellow-400 shadow-2xl">
           
           <button
             onClick={togglePlay}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-9 sm:w-10 h-9 sm:h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
               isPlaying
-                ? 'bg-gradient-to-tr from-amber-500 to-amber-300 text-black shadow-lg shadow-amber-500/30 animate-[spin_6s_linear_infinite]'
-                : 'bg-stone-800 text-amber-300 hover:bg-stone-700'
+                ? 'bg-yellow-400 text-red-900 shadow-lg shadow-yellow-400/40 animate-[spin_6s_linear_infinite]'
+                : 'bg-red-950 text-yellow-300 hover:bg-yellow-400 hover:text-red-900'
             }`}
             title={isPlaying ? 'Tạm dừng bài hát' : 'Phát bài ca người giáo viên nhân dân'}
           >
-            {isPlaying ? <Pause className="w-4 h-4 fill-black" /> : <Play className="w-4 h-4 fill-amber-300 ml-0.5" />}
+            {isPlaying ? <Pause className="w-4 h-4 fill-red-900" /> : <Play className="w-4 h-4 fill-yellow-300 ml-0.5" />}
           </button>
 
           <div className="hidden sm:block text-left pr-2">
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-serif font-medium text-amber-200">
+              <span className="text-xs font-serif font-black text-yellow-300">
                 {TRIBUTE_DATA.song.title}
               </span>
               {isPlaying && (
                 <div className="flex items-end space-x-0.5 h-3">
-                  <span className="w-0.5 bg-amber-400 rounded-full animate-[pulse_0.6s_ease-in-out_infinite] h-3"></span>
-                  <span className="w-0.5 bg-amber-400 rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2"></span>
-                  <span className="w-0.5 bg-amber-400 rounded-full animate-[pulse_0.4s_ease-in-out_infinite] h-3.5"></span>
+                  <span className="w-0.5 bg-yellow-400 rounded-full animate-[pulse_0.6s_ease-in-out_infinite] h-3"></span>
+                  <span className="w-0.5 bg-yellow-400 rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2"></span>
+                  <span className="w-0.5 bg-yellow-400 rounded-full animate-[pulse_0.4s_ease-in-out_infinite] h-3.5"></span>
                 </div>
               )}
             </div>
-            <p className="text-[10px] text-stone-400">
+            <p className="text-[10px] text-yellow-100">
               {TRIBUTE_DATA.song.composer}
             </p>
           </div>
 
           <button
             onClick={toggleMute}
-            className="p-1.5 rounded-lg text-stone-400 hover:text-amber-300 hover:bg-stone-800/80 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-yellow-200 hover:text-white hover:bg-red-900/60 transition-colors cursor-pointer"
             title={isMuted ? 'Bật tiếng' : 'Tắt tiếng'}
           >
-            {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
+            {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4" />}
           </button>
         </div>
       </aside>
@@ -1002,11 +1008,11 @@ export default function TributeLandingPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setModalImage(null)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-8 cursor-zoom-out"
           >
             <button
               onClick={() => setModalImage(null)}
-              className="absolute top-6 right-6 p-3 rounded-full bg-stone-900/80 border border-amber-500/40 text-amber-300 hover:text-white hover:bg-amber-600/30 transition-all cursor-pointer z-50"
+              className="absolute top-4 sm:top-6 right-4 sm:right-6 p-2.5 sm:p-3 rounded-full bg-red-700 text-yellow-300 hover:text-white hover:bg-red-800 border-2 border-yellow-300 transition-all cursor-pointer z-50 shadow-xl"
               title="Đóng xem ảnh"
             >
               <X className="w-5 h-5" />
@@ -1014,22 +1020,22 @@ export default function TributeLandingPage() {
 
             <div 
               onClick={(e) => e.stopPropagation()} 
-              className="relative max-w-5xl max-h-[90vh] flex flex-col items-center cursor-default"
+              className="relative max-w-5xl max-h-[92vh] flex flex-col items-center cursor-default bg-white p-3 sm:p-5 rounded-2xl sm:rounded-3xl border-4 border-yellow-400 shadow-2xl"
             >
               <img
                 src={modalImage.src}
                 alt={modalImage.title}
-                className="max-w-full max-h-[75vh] object-contain rounded-xl border border-amber-500/40 shadow-2xl"
+                className="max-w-full max-h-[70vh] sm:max-h-[74vh] object-contain rounded-xl border-2 border-red-700 shadow-md"
               />
-              <div className="mt-4 text-center max-w-xl">
-                <h4 className="text-lg font-serif text-white font-medium">
+              <div className="mt-3 text-center max-w-xl">
+                <h4 className="text-base sm:text-lg font-serif font-black text-red-800">
                   {modalImage.title}
                 </h4>
-                <p className="text-xs text-amber-300/90 font-light mt-0.5">
+                <p className="text-xs font-bold text-emerald-800 mt-0.5">
                   {modalImage.subtitle}
                 </p>
                 {modalImage.description && (
-                  <p className="text-xs text-stone-400 font-light mt-1">
+                  <p className="text-xs text-stone-600 mt-1">
                     {modalImage.description}
                   </p>
                 )}
@@ -1040,18 +1046,22 @@ export default function TributeLandingPage() {
       </AnimatePresence>
 
       {/* =========================================================================
-         FOOTER TỐI GIẢN
+         FOOTER TRƯỜNG HỌC THẬP NIÊN CŨ
          ========================================================================= */}
-      <footer className="border-t border-stone-800/80 py-10 text-center text-xs text-stone-500">
+      <footer className="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-yellow-200 py-10 text-center border-t-4 border-yellow-400">
         <div className="max-w-4xl mx-auto px-4 space-y-2">
-          <p className="font-serif text-stone-400 text-sm">
-            Trân trọng gửi tặng Cô Lương Thị Kim Lưu
+          <p className="font-serif font-black text-white text-base sm:text-lg tracking-wide">
+            Kính dâng Người Cô Đáng Kính — Cô Lương Thị Kim Lưu
           </p>
-          <p className="font-light">
-            Thiết kế & Biên soạn bởi Tập thể Lớp 12A15 (K65) — Trường THPT Xuân Đỉnh
+          <p className="text-xs sm:text-sm font-medium text-yellow-300">
+            Biên soạn & Thiết kế với tất cả lòng tri ân của Tập thể Lớp 12A15 (Niên khóa K65)
+          </p>
+          <p className="text-xs text-stone-300 pt-2 font-light">
+            Trường THPT Xuân Đỉnh • Hà Nội (2022 - 2025)
           </p>
         </div>
       </footer>
+
     </main>
   );
 }

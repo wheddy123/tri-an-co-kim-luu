@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
@@ -22,14 +22,19 @@ export const metadata: Metadata = {
   description: "Trang tri ân cô Lương Thị Kim Lưu - Giáo viên Chủ nhiệm & Giảng dạy GDKT&PL - Tập thể Lớp 12A15 K65 Trường THPT Xuân Đỉnh",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} dark`}>
-      <body className="min-h-screen bg-[#0a0708] text-[#f5f5f4] antialiased">
+    <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}>
+      <body className="min-h-screen bg-[#fffdf8] text-[#1c1917] antialiased overflow-x-hidden">
         {children}
       </body>
     </html>

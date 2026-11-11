@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0708;
-  --foreground: #f5f5f4;
+  --background: #fffdf8;
+  --foreground: #1c1917;
 }
 
 @theme inline {
@@ -13,12 +13,25 @@
   --font-serif: var(--font-serif), Georgia, serif;
 }
 
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
+  background-color: #fffdf8;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
-  background-color: #0a0708;
-  color: #f5f5f4;
+  background-color: #fffdf8;
+  color: #1c1917;
   font-family: var(--font-sans);
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
