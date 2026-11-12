@@ -58,7 +58,7 @@ export const TRIBUTE_DATA = {
     subject: 'Giáo dục Kinh tế và Pháp luật',
     school: 'Trường THPT Xuân Đỉnh',
     classCohort: 'Tập thể Lớp 12A15 (Niên khóa K65)',
-    timeline: 'Hành trình hơn 1000 ngày gắn bó (2022 - 2025)',
+    timeline: 'Niên khóa 2024 - 2027',
   },
   song: {
     title: 'Bài ca người giáo viên nhân dân',
@@ -66,8 +66,8 @@ export const TRIBUTE_DATA = {
   },
   hero: {
     badge: '★ TRƯỜNG THPT XUÂN ĐỈNH • NIÊN KHÓA K65 ★',
-    title: 'Hơn 1000 Ngày Trọn Vẹn Cùng Cô Lương Thị Kim Lưu',
-    subBadge: 'VINH DANH & TRI ÂN NGƯỜI LÁI ĐÒ KÍNH YÊU CỦA TẬP THỂ 12A15',
+    title: 'Hành Trình Trọn Vẹn Cùng Cô Lương Thị Kim Lưu',
+    subBadge: 'VINH DANH & TRI ÂN NGƯỜI LÁI ĐÒ KÍNH YÊU CỦA TẬP THỂ 12A15 NHÂN NGÀY 20/11',
     subtitle: 'Nơi tri thức pháp luật song hành cùng lòng bao dung nhẫn nại và tình thương thầm lặng của người cô kính yêu.',
   },
   stories: [
@@ -86,26 +86,26 @@ export const TRIBUTE_DATA = {
     {
       id: 'chapter-2',
       number: '02',
-      title: 'Góc Khuất Của 2 Năm Đầu Tiên',
-      subtitle: 'Sự kiên nhẫn phi thường trước 9 mảnh ghép đặc biệt',
+      title: 'Sự Kiên Nhẫn Trong Những Năm Đầu Tiên',
+      subtitle: 'Tấm lòng bao dung trước những mảnh ghép đặc biệt',
       icon: ShieldCheck,
       image: PHOTOS.classroomB105,
       imageCaption: 'Cửa phòng học B105 - Nơi cô đón nhận và uốn nắn những học sinh đặc biệt đầu tiên',
       imageTag: 'Bao Dung & Nhẫn Nại',
-      content: `Hơn 1000 ngày cùng nhau là ngần ấy thời gian tập thể A15 thấu hiểu những áp lực vô hình đè nặng lên vai cô. Đặc biệt trong suốt hai năm đầu tiên đầy sóng gió, khi lớp đón nhận tới 9 bạn học sinh đặc biệt với những hoàn cảnh và thử thách rất riêng (từ nghịch ngợm cá biệt cho đến những bạn mang khiếm khuyết, cần hỗ trợ hòa nhập, chậm phát triển...). Đã có những mệt mỏi, trăn trở, nhưng cô vẫn luôn bao dung, nhẫn nại và hết lòng vì công việc, không bao giờ bỏ cuộc và chưa từng buông tay bất kỳ học trò nào.`,
-      highlight: '9 bạn học sinh đặc biệt là 9 thử thách lớn — và cô đã đón nhận bằng cả tấm lòng người mẹ.',
+      content: `Gắn bó cùng nhau từ những ngày đầu lớp 10, tập thể A15 dần thấu hiểu những áp lực thầm lặng đè nặng lên vai cô. Đặc biệt trong suốt hai năm đầu tiên nhiều thử thách, khi lớp có những thành viên mang cá tính riêng biệt cùng những hoàn cảnh cần sự sẻ chia, nâng đỡ và hỗ trợ đặc biệt để hòa nhập cùng tập thể. Đã có không ít trăn trở, vất vả, nhưng cô vẫn luôn bao dung, nhẫn nại và hết lòng vì học trò, chưa từng nản lòng hay bỏ lại bất kỳ ai phía sau.`,
+      highlight: 'Sự bao dung và kiên nhẫn của cô đã nâng đỡ từng mảnh ghép, giúp A15 trở thành một tập thể gắn kết và trọn vẹn.',
     },
     {
       id: 'chapter-3',
       number: '03',
-      title: 'Sự Thấu Cảm Sau Hơn 1000 Ngày',
+      title: 'Sự Thấu Cảm Trên Chặng Đường Cuối Cấp',
       subtitle: 'Tình thương không cần phô trương, chỉ cần lòng người cảm nhận',
       icon: Compass,
       image: PHOTOS.outdoorSmile,
       imageCaption: 'Nụ cười tươi tắn, gần gũi và ấm áp của cô ngoài đời thường',
       imageTag: 'Thấu Hiểu & Biết Ơn',
-      content: `Trải qua những va vấp của tuổi học trò, giờ đây khi chuẩn bị chia xa mái trường Xuân Đỉnh, tập thể 12A15 K65 mới thực sự thấu suốt: sự nghiêm nghị của cô chính là chiếc khiên bảo vệ, và sự bao dung nhẫn nại của cô chính là chiếc nôi nuôi dưỡng chúng em trưởng thành. 1000 ngày bên cô không chỉ là những bài giảng Kinh tế & Pháp luật, mà là bài học sâu sắc nhất về lòng vị tha, sự tử tế và tinh thần trách nhiệm trước nghịch cảnh cuộc đời.`,
-      highlight: 'Chúng em đã lớn khôn từ chính sự kiên định và tấm lòng bao dung không lời ấy.',
+      content: `Trải qua những va vấp của tuổi học trò, giờ đây khi đã bước vào năm học lớp 12 với nhiều cột mốc quan trọng phía trước, tập thể 12A15 K65 càng thêm thấu suốt: sự nghiêm nghị của cô chính là chiếc khiên bảo vệ, và sự nhẫn nại của cô chính là điểm tựa giúp chúng em trưởng thành. Những tháng ngày bên cô không chỉ có những bài giảng Kinh tế & Pháp luật, mà còn là bài học sâu sắc về lòng vị tha, sự tử tế và tinh thần trách nhiệm trước cuộc sống.`,
+      highlight: 'Chúng em đang trưởng thành từ chính sự kiên định và tấm lòng bao dung lặng lẽ ấy.',
     },
   ],
   gallery: [
@@ -139,7 +139,7 @@ export const TRIBUTE_DATA = {
       title: 'Trước Cửa Phòng Học B105',
       subtitle: 'Lớp 10A15 • Kỷ niệm ngày đầu',
       tag: 'Mái Trường Xưa',
-      description: 'Cô đứng bên giàn hoa giấy và cờ đỏ sao vàng tại cửa phòng học B105 — nơi khởi đầu hành trình 1000 ngày.',
+      description: 'Cô đứng bên giàn hoa giấy và cờ đỏ sao vàng tại cửa phòng học B105 — nơi khởi đầu hành trình thanh xuân cô trò.',
     },
     {
       id: 'gal-yellow',
@@ -167,9 +167,9 @@ export const TRIBUTE_DATA = {
     },
   ],
   closing: {
-    quoteLead: 'Bọn em cảm ơn cô vì tất cả.',
+    quoteLead: 'Bọn em cảm ơn cô vì tất cả. Kính chúc cô...',
     defaultWish:
-      'Chúc cô luôn dồi dào sức khỏe, an yên trong tâm hồn, luôn giữ trọn ngọn lửa nhiệt huyết với nghề và tìm thấy thật nhiều niềm vui, tự hào trên con đường gieo mầm tri thức...',
+      'luôn dồi dào sức khỏe, luôn giữ trọn ngọn lửa nhiệt huyết với nghề và luôn hạnh phúc, an yên trên con đường phía trước...',
     signOff: 'Tập thể Lớp 12A15 (Niên khóa K65)',
     schoolName: 'Trường THPT Xuân Đỉnh',
   },
@@ -538,7 +538,7 @@ export default function TributeLandingPage() {
                 THPT Xuân Đỉnh • A15
               </span>
               <span className="hidden md:inline-block text-[11px] text-white/90 ml-2 font-normal">
-                (2022 - 2025)
+                (2024 - 2027)
               </span>
             </div>
           </div>
@@ -601,7 +601,7 @@ export default function TributeLandingPage() {
               
               {/* Tiêu đề chính rực rỡ phong cách thập niên cũ với Kinetic Reveal */}
               <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-black tracking-tight text-red-800 leading-[1.25] mb-4 drop-shadow-sm max-w-full">
-                <KineticWords text="Hơn 1000 Ngày Trọn Vẹn" delayOffset={0.2} />
+                <KineticWords text="Hành Trình Trọn Vẹn" delayOffset={0.2} />
                 <br />
                 <span className="text-emerald-800">
                   <KineticWords text="Cùng Cô Lương Thị Kim Lưu" delayOffset={0.6} />
@@ -643,7 +643,7 @@ export default function TributeLandingPage() {
                 <strong className="text-red-700 font-bold bg-yellow-200/90 px-1 py-0.5 rounded">
                   {TRIBUTE_DATA.teacher.subject}
                 </strong>{' '}
-                — Người đã nhẫn nại, tận tâm chở đạo và dùng cả tấm lòng bao dung chở che 12A15 K65 qua những năm tháng học trò đáng nhớ nhất.
+                — Người đã nhẫn nại, tận tâm chở đạo và dùng cả tấm lòng bao dung đồng hành cùng A15 K65 từ những ngày đầu bỡ ngỡ đến chặng đường cuối cấp đầy thử thách hôm nay.
               </motion.p>
 
               {/* Cụm Nút Hành Động Rực Rỡ với Hiệu ứng Spring & Pulse */}
@@ -798,7 +798,7 @@ export default function TributeLandingPage() {
 
       {/* BĂNG RÔN KHẨU HIỆU CHẠY VÔ TẬN PHONG CÁCH LỄ HỘI TRƯỜNG HỌC THẬP NIÊN CŨ */}
       <InfiniteMarquee 
-        text="★ HỌC ĐỂ BIẾT, HỌC ĐỂ LÀM VIỆC, HỌC ĐỂ CHUNG SỐNG, HỌC ĐỂ HOÀN THIỆN NHÂN CÁCH ★ KHẨU HIỆU TRƯỜNG THPT XUÂN ĐỈNH ★ TRI ÂN CÔ LƯƠNG THỊ KIM LƯU — A15K65 ★ HƠN 1000 NGÀY NGHĨA TÌNH CÔ TRÒ ★" 
+        text="★ HỌC ĐỂ BIẾT, HỌC ĐỂ LÀM VIỆC, HỌC ĐỂ CHUNG SỐNG, HỌC ĐỂ HOÀN THIỆN NHÂN CÁCH ★ KHẨU HIỆU TRƯỜNG THPT XUÂN ĐỈNH ★ TRI ÂN CÔ LƯƠNG THỊ KIM LƯU — A15K65 (2024 - 2027) ★ DẤU ẤN THANH XUÂN CÔ TRÒ ★" 
         speed={32}
       />
 
@@ -815,7 +815,7 @@ export default function TributeLandingPage() {
             Những Điều Tập Thể 12A15 Khắc Ghi
           </h2>
           <p className="mt-3 text-stone-600 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
-            Mỗi chặng đường 1000 ngày đều in đậm dấu ấn tận tụy của cô Lưu — từ bục giảng B105 đến từng bước đường đời.
+            Mỗi chặng đường đều in đậm dấu ấn tận tụy của cô Lưu — từ bục giảng B105 đến từng bước đường đời.
           </p>
         </div>
 
@@ -970,12 +970,12 @@ export default function TributeLandingPage() {
               {
                 num: 2,
                 title: 'Bao Dung & Nhẫn Nại',
-                desc: 'Đối diện với 9 bạn học sinh đặc biệt trong 2 năm đầu, cô chọn ở lại, không buông tay và kiên nhẫn uốn nắn từng ngày.'
+                desc: 'Đối diện với những thử thách và các mảnh ghép đặc biệt trong hai năm đầu, cô chọn ở lại, kiên nhẫn lắng nghe và uốn nắn từng ngày.'
               },
               {
                 num: 3,
                 title: 'Tình Thương Lặng Lẽ',
-                desc: 'Dù kiệm lời ngọt ngào, nhưng mỗi hành động của cô đều bảo bọc và hướng tập thể 12A15 K65 đến bến đỗ bình an.'
+                desc: 'Dù kiệm lời ngọt ngào, nhưng mỗi hành động của cô đều bảo bọc và hướng tập thể 12A15 K65 vững bước trên chặng đường cuối cấp.'
               }
             ].map((item, idx) => (
               <motion.div
@@ -1193,13 +1193,13 @@ export default function TributeLandingPage() {
                 Kính gửi <strong className="text-red-800 font-bold">Cô Lương Thị Kim Lưu</strong>,
               </p>
               <p>
-                Những ngày cuối cùng của đời học sinh THPT đang dần khép lại. Ba năm dưới mái trường Xuân Đỉnh với hơn 1000 ngày gắn bó, chúng em có thể đã từng là những đứa trẻ bướng bỉnh, có lúc vô tâm chưa thấu hiểu hết những âu lo và áp lực nặng nề mà cô phải đối diện.
+                Nhân dịp ngày Nhà giáo Việt Nam 20/11 trong năm học lớp 12 đầy ý nghĩa này, tập thể 12A15 K65 muốn gửi tới cô lời cảm ơn chân thành và sâu sắc nhất từ tận đáy lòng.
               </p>
               <p>
-                Hai năm đầu tiên với 9 bạn học sinh đặc biệt — thử thách tưởng chừng có thể làm chùn bước bất kỳ người giáo viên nào. Nhưng chính cô, bằng lòng nhẫn nại bền bỉ và sự bao dung không phô trương, đã kiên trì uốn nắn và gìn giữ một tập thể A15 trọn vẹn, đoàn kết và ấm áp như ngày hôm nay.
+                Chúng em biết rằng bản thân chưa bao giờ là một tập thể hoàn hảo, và hành trình đồng hành cùng chúng em đã có lúc khiến cô phải phiền lòng. Nhưng chính nhờ sự kiên nhẫn, lòng bao dung vô bờ bến và bản lĩnh vững vàng của cô qua từng năm tháng mà chúng em mới có được sự chững chạc và trưởng thành của ngày hôm nay.
               </p>
               <p>
-                Môn Giáo dục Kinh tế và Pháp luật có thể khô khan trong mắt nhiều người, nhưng qua từng bài giảng tâm huyết của cô, chúng em học được lòng trung thực, ý thức trách nhiệm và cách sống ngay thẳng giữa cuộc đời.
+                Bọn em cảm ơn cô vì tất cả những bài học, sự chở che và tình thương thầm lặng mà cô đã dành cho A15 K65 suốt chặng đường vừa qua.
               </p>
             </motion.div>
 
@@ -1242,7 +1242,7 @@ export default function TributeLandingPage() {
                       onChange={(e) => setCustomWish(e.target.value)}
                       rows={4}
                       className="w-full bg-white border-2 border-red-400 rounded-xl p-3.5 text-stone-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-red-500 resize-none font-normal leading-relaxed shadow-inner"
-                      placeholder="Điền lời chúc của bạn gửi tới cô..."
+                      placeholder="Ví dụ: luôn dồi dào sức khỏe, luôn giữ trọn ngọn lửa nhiệt huyết với nghề và luôn hạnh phúc, an yên trên con đường phía trước..."
                     />
                     <p className="text-[11px] text-stone-500 italic">
                       * Bạn có thể tự do chỉnh sửa và thêm lời chúc riêng của mình.
@@ -1291,7 +1291,7 @@ export default function TributeLandingPage() {
             </motion.div>
 
             <div className="pt-2 text-center sm:text-left text-xs text-stone-500">
-              Lưu giữ mãi những kỷ niệm đẹp nhất niên khóa 2022 - 2025 • Trường THPT Xuân Đỉnh
+              Lưu giữ những kỷ niệm đẹp nhất niên khóa 2024 - 2027 • Trường THPT Xuân Đỉnh
             </div>
 
           </div>
@@ -1515,7 +1515,7 @@ export default function TributeLandingPage() {
             Biên soạn & Thiết kế với tất cả lòng tri ân của Tập thể Lớp 12A15 (Niên khóa K65)
           </p>
           <p className="text-xs text-stone-300 pt-2 font-light">
-            Trường THPT Xuân Đỉnh • Hà Nội (2022 - 2025)
+            Trường THPT Xuân Đỉnh • Hà Nội (2024 - 2027)
           </p>
         </div>
       </footer>
