@@ -1046,7 +1046,7 @@ export default function TributeLandingPage() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.85, y: 30 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative max-w-md w-full bg-gradient-to-b from-[#fffbf0] via-[#fef7e6] to-[#faedd0] rounded-3xl p-6 sm:p-8 border-4 border-yellow-400 shadow-2xl text-center text-stone-800 overflow-hidden cursor-default"
+              className="relative max-w-md w-full bg-gradient-to-b from-[#fffbf0] via-[#fef7e6] to-[#faedd0] rounded-3xl p-4 sm:p-8 border-4 border-yellow-400 shadow-2xl text-center text-stone-800 overflow-hidden cursor-default mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Nút đóng nhanh góc trên */}
@@ -1059,35 +1059,35 @@ export default function TributeLandingPage() {
               </button>
 
               {/* Băng rôn đỏ niên khóa */}
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-red-700 text-yellow-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-4 border border-yellow-400 shadow">
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-red-700 text-yellow-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-3 sm:mb-4 border border-yellow-400 shadow">
                 <Star className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
                 <span>THPT Xuân Đỉnh • Tập thể 12A15 K65</span>
                 <Star className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
               </div>
 
               {/* Tiêu đề trang trọng */}
-              <h2 className="text-xl sm:text-2xl font-serif font-black text-red-800 leading-snug mb-1">
+              <h2 className="text-lg sm:text-2xl font-serif font-black text-red-800 leading-snug mb-1">
                 Tri Ân Người Lái Đò Kính Yêu
               </h2>
-              <h3 className="text-lg sm:text-xl font-serif font-bold text-emerald-800 mb-4">
+              <h3 className="text-base sm:text-xl font-serif font-bold text-emerald-800 mb-3 sm:mb-4">
                 Cô Lương Thị Kim Lưu
               </h3>
 
               {/* Biểu tượng đĩa nhạc xoay tròn kèm sóng âm thanh */}
-              <div className="relative mx-auto w-24 h-24 mb-5 flex items-center justify-center cursor-pointer" onClick={handleEnterWithMusic}>
+              <div className="relative mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-4 sm:mb-5 flex items-center justify-center cursor-pointer" onClick={handleEnterWithMusic}>
                 <div className="absolute inset-0 rounded-full bg-red-500/20 animate-ping" />
-                <div className="w-20 h-20 rounded-full bg-stone-900 border-4 border-yellow-400 shadow-xl flex items-center justify-center text-yellow-300 animate-[spin_8s_linear_infinite]">
-                  <Music className="w-9 h-9 text-yellow-400 drop-shadow" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-stone-900 border-3 sm:border-4 border-yellow-400 shadow-xl flex items-center justify-center text-yellow-300 animate-[spin_8s_linear_infinite]">
+                  <Music className="w-7 h-7 sm:w-9 sm:h-9 text-yellow-400 drop-shadow" />
                 </div>
               </div>
 
               {/* Thông tin bài hát */}
-              <div className="bg-red-50/90 border border-red-300 rounded-xl p-3 mb-5 text-left">
+              <div className="bg-red-50/90 border border-red-300 rounded-xl p-2.5 sm:p-3 mb-4 sm:mb-5 text-left">
                 <p className="text-xs sm:text-sm font-bold text-red-900 flex items-center space-x-1.5">
-                  <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
                   <span>Bài hát: "Bài ca người giáo viên nhân dân"</span>
                 </p>
-                <p className="text-[11px] text-stone-600 mt-1 pl-5">
+                <p className="text-[10px] sm:text-[11px] text-stone-600 mt-1 pl-5">
                   Nhạc sĩ: Hoàng Vân • Âm hưởng hào hùng, trang trọng
                 </p>
               </div>
@@ -1095,15 +1095,15 @@ export default function TributeLandingPage() {
               {/* Nút bấm lớn kích hoạt âm thanh */}
               <button
                 onClick={handleEnterWithMusic}
-                className="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-red-600 via-red-700 to-red-800 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold text-sm sm:text-base tracking-wide border-2 border-yellow-400 shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 cursor-pointer mb-2.5 animate-bounce"
+                className="w-full py-3 sm:py-3.5 px-3 sm:px-5 rounded-2xl bg-gradient-to-r from-red-600 via-red-700 to-red-800 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold text-xs sm:text-base tracking-wide border-2 border-yellow-400 shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-1.5 sm:space-x-2 cursor-pointer mb-2 animate-bounce"
               >
-                <Play className="w-5 h-5 fill-yellow-300 text-yellow-300" />
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
                 <span>BẬT NHẠC VÀ BẮT ĐẦU XEM TRANG</span>
               </button>
 
               <button
                 onClick={() => setShowWelcomeGate(false)}
-                className="text-xs text-stone-500 hover:text-stone-800 underline transition-colors cursor-pointer py-1"
+                className="text-[11px] sm:text-xs text-stone-500 hover:text-stone-800 underline transition-colors cursor-pointer py-1"
               >
                 Vào xem trang ở chế độ im lặng
               </button>
