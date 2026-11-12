@@ -182,10 +182,11 @@ export default function TributeLandingPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [isEditingWish, setIsEditingWish] = useState(false);
 
-  // Audio Ref
+  // Audio Ref & State
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [showWelcomeGate, setShowWelcomeGate] = useState(false);
 
   // Spotlight ảnh cô ở Hero
   const [activeHeroPhoto, setActiveHeroPhoto] = useState<string>(PHOTOS.banner);
@@ -194,43 +195,69 @@ export default function TributeLandingPage() {
   const [modalImage, setModalImage] = useState<{ src: string; title: string; subtitle: string; description?: string } | null>(null);
 
   /* =========================================================================
-     TỰ ĐỘNG PHÁT NHẠC NGAY KHI VÀO TRANG (AUTOPLAY + UNLOCK ON FIRST INTERACTION)
+     CƠ CHẾ TỰ ĐỘNG PHÁT NHẠC (AUTOPLAY TRÌNH DUYỆT + WELCOME GATE + TƯƠNG TÁC)
      ========================================================================= */
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.85;
 
-    // 1. Thử gọi play() ngay lập tức khi vào trang
+    // 1. Thử gọi play() tự động ngay lập tức khi mở trang
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
           setIsPlaying(true);
+          setShowWelcomeGate(false);
         })
         .catch(() => {
-          // 2. Nếu trình duyệt chặn raw autoplay, tự mở ngay khi người dùng chạm, click hoặc cuộn trang
-          const unlockAudio = () => {
-            if (audioRef.current) {
+          // 2. Trình duyệt chặn autoplay thuần (Safari iOS, Chrome, Android do chính sách âm thanh)
+          // Hiện bảng thông báo mở thiệp chào mừng để kích hoạt âm thanh một cách tự nhiên 100%
+          setShowWelcomeGate(true);
+          setIsPlaying(false);
+
+          // 3. Fallback: Bất kỳ lần chạm/nhấn nào trên màn hình cũng tự động phát
+          const handleFirstInteraction = () => {
+            if (audioRef.current && audioRef.current.paused) {
               audioRef.current.play()
-                .then(() => setIsPlaying(true))
-                .catch((e) => console.log('Unlock audio prevented:', e));
+                .then(() => {
+                  setIsPlaying(true);
+                  setShowWelcomeGate(false);
+                  removeListeners();
+                })
+                .catch(() => {
+                  // Tiếp tục giữ listener cho lần chạm sau
+                });
             }
-            window.removeEventListener('click', unlockAudio);
-            window.removeEventListener('touchstart', unlockAudio);
-            window.removeEventListener('scroll', unlockAudio);
-            window.removeEventListener('pointerdown', unlockAudio);
-            window.removeEventListener('keydown', unlockAudio);
           };
 
-          window.addEventListener('click', unlockAudio, { once: true });
-          window.addEventListener('touchstart', unlockAudio, { once: true });
-          window.addEventListener('scroll', unlockAudio, { once: true });
-          window.addEventListener('pointerdown', unlockAudio, { once: true });
-          window.addEventListener('keydown', unlockAudio, { once: true });
+          const removeListeners = () => {
+            window.removeEventListener('click', handleFirstInteraction);
+            window.removeEventListener('touchstart', handleFirstInteraction);
+            window.removeEventListener('pointerdown', handleFirstInteraction);
+            window.removeEventListener('keydown', handleFirstInteraction);
+          };
+
+          window.addEventListener('click', handleFirstInteraction, { passive: true });
+          window.addEventListener('touchstart', handleFirstInteraction, { passive: true });
+          window.addEventListener('pointerdown', handleFirstInteraction, { passive: true });
+          window.addEventListener('keydown', handleFirstInteraction, { passive: true });
         });
     }
   }, []);
+
+  const handleEnterWithMusic = () => {
+    setShowWelcomeGate(false);
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((e) => {
+          console.log('Play prevented:', e);
+        });
+    }
+  };
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -269,6 +296,8 @@ export default function TributeLandingPage() {
         ref={audioRef}
         src={AUDIO_TRACK}
         loop
+        autoPlay
+        playsInline
         preload="auto"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -997,6 +1026,91 @@ export default function TributeLandingPage() {
           </button>
         </div>
       </aside>
+
+      {/* =========================================================================
+         CỔNG CHÀO MỪNG TRI ÂN & MỞ NHẠC (WELCOME GATE DIALOG)
+         Xuất hiện khi trình duyệt chặn autoplay không tiếng để người dùng chạm mở nhạc tự nhiên 100%
+         ========================================================================= */}
+      <AnimatePresence>
+        {showWelcomeGate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md cursor-pointer"
+            onClick={handleEnterWithMusic}
+          >
+            <motion.div
+              initial={{ scale: 0.85, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.85, y: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative max-w-md w-full bg-gradient-to-b from-[#fffbf0] via-[#fef7e6] to-[#faedd0] rounded-3xl p-6 sm:p-8 border-4 border-yellow-400 shadow-2xl text-center text-stone-800 overflow-hidden cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Nút đóng nhanh góc trên */}
+              <button
+                onClick={() => setShowWelcomeGate(false)}
+                className="absolute top-3 right-3 p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 transition-colors cursor-pointer"
+                title="Đóng thông báo"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Băng rôn đỏ niên khóa */}
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-red-700 text-yellow-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-4 border border-yellow-400 shadow">
+                <Star className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
+                <span>THPT Xuân Đỉnh • Tập thể 12A15 K65</span>
+                <Star className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300 flex-shrink-0" />
+              </div>
+
+              {/* Tiêu đề trang trọng */}
+              <h2 className="text-xl sm:text-2xl font-serif font-black text-red-800 leading-snug mb-1">
+                Tri Ân Người Lái Đò Kính Yêu
+              </h2>
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-emerald-800 mb-4">
+                Cô Lương Thị Kim Lưu
+              </h3>
+
+              {/* Biểu tượng đĩa nhạc xoay tròn kèm sóng âm thanh */}
+              <div className="relative mx-auto w-24 h-24 mb-5 flex items-center justify-center cursor-pointer" onClick={handleEnterWithMusic}>
+                <div className="absolute inset-0 rounded-full bg-red-500/20 animate-ping" />
+                <div className="w-20 h-20 rounded-full bg-stone-900 border-4 border-yellow-400 shadow-xl flex items-center justify-center text-yellow-300 animate-[spin_8s_linear_infinite]">
+                  <Music className="w-9 h-9 text-yellow-400 drop-shadow" />
+                </div>
+              </div>
+
+              {/* Thông tin bài hát */}
+              <div className="bg-red-50/90 border border-red-300 rounded-xl p-3 mb-5 text-left">
+                <p className="text-xs sm:text-sm font-bold text-red-900 flex items-center space-x-1.5">
+                  <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                  <span>Bài hát: "Bài ca người giáo viên nhân dân"</span>
+                </p>
+                <p className="text-[11px] text-stone-600 mt-1 pl-5">
+                  Nhạc sĩ: Hoàng Vân • Âm hưởng hào hùng, trang trọng
+                </p>
+              </div>
+
+              {/* Nút bấm lớn kích hoạt âm thanh */}
+              <button
+                onClick={handleEnterWithMusic}
+                className="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-red-600 via-red-700 to-red-800 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold text-sm sm:text-base tracking-wide border-2 border-yellow-400 shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2 cursor-pointer mb-2.5 animate-bounce"
+              >
+                <Play className="w-5 h-5 fill-yellow-300 text-yellow-300" />
+                <span>BẬT NHẠC VÀ BẮT ĐẦU XEM TRANG</span>
+              </button>
+
+              <button
+                onClick={() => setShowWelcomeGate(false)}
+                className="text-xs text-stone-500 hover:text-stone-800 underline transition-colors cursor-pointer py-1"
+              >
+                Vào xem trang ở chế độ im lặng
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* =========================================================================
          LIGHTBOX MODAL (XEM ẢNH GỐC ĐẦY ĐỦ 100% PHÓNG TO)
